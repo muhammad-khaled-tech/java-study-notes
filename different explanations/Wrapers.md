@@ -167,3 +167,141 @@ System.out.println(Integer.toOctalString(n));  // Output: 376
 |**`valueOf("10")`**|بتحول النص لكائن|**`Integer`** (Object)|
 |**`intValue()`**|بتفك الكائن لرقم عادي|**`int`** (Primitive)|
 |**`NaN`**|نتيجة عملية غير منطقية (0.0/0.0)|قيمة خاصة في الـ Double|
+
+---
+ده "كود المعمل" الشامل يا هندسة. 🧪👨‍💻
+
+الكود ده أنا مجمعة لك فيه كل "الخلاصة" بتاعت الـ Wrappers. هو مقسم لوحدات (Methods) لكل نوع، عشان تاخده Copy وتحطه في الـ IDE عندك (زي IntelliJ أو Eclipse) وتعمل Run وتتفرج على العظمة.
+
+الكود بيغطي: `Integer`, `Double`, `Character`, `Boolean`.
+
+### 🧪 WrapperLab.java
+
+
+
+```Java
+public class WrapperLab {
+
+    public static void main(String[] args) {
+        System.out.println("=== Welcome to Wrapper Classes Lab ===\n");
+
+        testInteger();   // تجربة الأعداد الصحيحة
+        testDouble();    // تجربة الأرقام العشرية والحالات الخاصة
+        testCharacter(); // تجربة الحروف والتحقق منها
+        testBoolean();   // تجربة المنطق
+
+        System.out.println("\n=== End of Lab ===");
+    }
+
+    // 1. Integer Wrapper (سيد الأرقام الصحيحة)
+    public static void testInteger() {
+        System.out.println("--- 1. Testing Integer Class ---");
+
+        // أ) الثوابت (Constants)
+        System.out.println("Max Value: " + Integer.MAX_VALUE); // 2 مليار وشوية
+        System.out.println("Min Value: " + Integer.MIN_VALUE);
+
+        // ب) التحويل من String لـ int (Parsing) - بيرجع Primitive
+        String numStr = "123";
+        int primitiveInt = Integer.parseInt(numStr);
+        System.out.println("Parsed int: " + (primitiveInt + 5)); // نجمع عليه عشان نتأكد إنه رقم
+
+        // ج) التحويل من String لـ Integer Object (valueOf) - بيرجع Object
+        Integer objInt = Integer.valueOf("456");
+        System.out.println("Integer Object: " + objInt);
+
+        // د) أنظمة الأعداد (Binary, Hex, Octal)
+        int n = 255;
+        System.out.println("255 in Binary: " + Integer.toBinaryString(n)); // 11111111
+        System.out.println("255 in Hex:    " + Integer.toHexString(n));    // ff
+
+        // هـ) دوال المقارنة (Utility)
+        System.out.println("Max of (10, 20): " + Integer.max(10, 20));
+        System.out.println("Compare (5, 10): " + Integer.compare(5, 10)); // -1 معناها الأول أصغر
+        System.out.println();
+    }
+
+    // 2. Double Wrapper (مخزن اللانهاية)
+    public static void testDouble() {
+        System.out.println("--- 2. Testing Double Class ---");
+
+        // أ) الثوابت الخطيرة (Infinity & NaN)
+        double divByZero = 1.0 / 0.0;
+        double zeroByZero = 0.0 / 0.0;
+        
+        System.out.println("1.0 / 0.0 = " + divByZero); // Infinity
+        System.out.println("0.0 / 0.0 = " + zeroByZero); // NaN
+
+        // ب) الكشف عن المصائب (Checking)
+        // دي مهمة جداً عشان البرنامج ما يضربش منك في الحسابات
+        System.out.println("Is 'divByZero' Infinite? " + Double.isInfinite(divByZero)); // true
+        System.out.println("Is 'zeroByZero' NaN?      " + Double.isNaN(zeroByZero));      // true
+
+        // ج) التحويل (Parsing)
+        String price = "99.99";
+        double priceVal = Double.parseDouble(price);
+        System.out.println("Parsed Price: " + priceVal);
+        System.out.println();
+    }
+
+    // 3. Character Wrapper (المحقق كونان) 🕵️‍♂️
+    public static void testCharacter() {
+        System.out.println("--- 3. Testing Character Class ---");
+
+        char c1 = 'A';
+        char c2 = '9';
+        char c3 = ' ';
+
+        // دوال التحقق (is methods)
+        System.out.println("'A' is Letter?     " + Character.isLetter(c1));      // true
+        System.out.println("'9' is Digit?      " + Character.isDigit(c2));       // true
+        System.out.println("' ' is Whitespace? " + Character.isWhitespace(c3));  // true
+        System.out.println("'a' is LowerCase?  " + Character.isLowerCase('a'));  // true
+
+        // دوال التحويل
+        System.out.println("To UpperCase 'b':  " + Character.toUpperCase('b'));
+        System.out.println();
+    }
+
+    // 4. Boolean Wrapper (حارس البوابة)
+    public static void testBoolean() {
+        System.out.println("--- 4. Testing Boolean Class ---");
+
+        // التحويل الذكي (Parsing)
+        // أي كلمة غير "true" (بأي حروف كابيتال أو سمول) هتعتبر false
+        boolean b1 = Boolean.parseBoolean("TRUE");
+        boolean b2 = Boolean.parseBoolean("true");
+        boolean b3 = Boolean.parseBoolean("Yes"); // خدعة
+
+        System.out.println("Parse 'TRUE': " + b1); // true
+        System.out.println("Parse 'true': " + b2); // true
+        System.out.println("Parse 'Yes':  " + b3); // false (مش فاهم غير true)
+        
+        // عمليات منطقية
+        System.out.println("Logical AND (true, false): " + Boolean.logicalAnd(true, false));
+        System.out.println();
+    }
+}
+```
+
+---
+
+### حاجات لازم تجربها بنفسك في الكود ده وتشوف النتيجة (Challenges) 🔥:
+
+1. في جزء الـ Integer:
+    
+    جرب تغير السطر ده: Integer.parseInt("123") وخليه Integer.parseInt("123a").
+    
+    - **المتوقع:** شوف الـ Exception اللي هيطلعلك واسمه إيه (عشان ده أشهر Error هتشوفه في حياتك).
+        
+2. في جزء الـ Double:
+    
+    جرب تقسم int على int بـ صفر (مثلاً 1 / 0) بدل 1.0 / 0.0.
+    
+    - **المتوقع:** هل هيديك `Infinity` ولا البرنامج هيضرب (`ArithmeticException`)؟ (فيه فرق بين قسمة الـ integers وقسمة الـ doubles).
+        
+3. في جزء الـ Boolean:
+    
+    جرب Boolean.valueOf("True") وشوف هل بيرجع Boolean object ولا boolean primitive؟
+    
+

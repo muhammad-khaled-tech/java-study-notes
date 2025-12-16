@@ -37,7 +37,7 @@ public class VarTest {
 
 **(Source: Lesson 8 - Functional Interfaces)**
 
-```
+```java
 interface Calculator {
     int sum(int a, int b);
 }
@@ -50,7 +50,10 @@ public class LambdaVar {
 }
 ```
 
-**A.** `15` **B.** `510` **C.** Runtime Exception **D.** Compilation Error
+**A.** `15`
+**B.** `510`
+**C.** Runtime Exception
+**D.** Compilation Error
 
 **الإجابة: D (Compilation Error)**
 

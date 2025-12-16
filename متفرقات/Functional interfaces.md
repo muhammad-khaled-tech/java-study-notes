@@ -563,7 +563,7 @@ public class GenericLambdaDemo {
 
 Java
 
-```
+```Java
 // اختبار: هل الرقم موجب؟
 Predicate<Integer> isPositive = num -> num > 0;
 
@@ -586,7 +586,7 @@ System.out.println(isPositive.test(-5)); // false
 
 Java
 
-```
+```Java
 // دالة بتطبع الاسم وتعمله ترحيب
 Consumer<String> greeter = name -> System.out.println("Welcome " + name);
 
@@ -609,7 +609,7 @@ greeter.accept("Mohamed"); // Output: Welcome Mohamed
 
 Java
 
-```
+```Java
 // دالة بترجع تاريخ ووقت اللحظة دي
 Supplier<Date> dateSupplier = () -> new Date();
 
@@ -630,7 +630,7 @@ System.out.println(dateSupplier.get()); // بتطبع الوقت الحالي
 
 Java
 
-```
+```Java
 // دالة بتاخد نص (String) وترجع طوله (Integer)
 // T = String, R = Integer
 Function<String, Integer> lengthFinder = str -> str.length();
@@ -653,7 +653,7 @@ System.out.println(len); // 13
 
 Java
 
-```
+```Java
 // دالة بتربع الرقم (بتاخد int وترجع int)
 UnaryOperator<Integer> square = n -> n * n;
 
@@ -674,9 +674,23 @@ System.out.println(square.apply(5)); // 25
 
 Java
 
-```
+```Java
 // دالة بتضرب رقمين في بعض
 BinaryOperator<Integer> multiply = (a, b) -> a * b;
 
 System.out.println(multiply.apply(10, 2)); // 20
 ```
+
+---
+### الخلاصة (جدول الإنقاذ لليلة الامتحان) 🚑
+
+عشان تحفظهم وما تتلخبطش، احفظ الجدول ده صم:
+
+|**اسم الإنترفيس**|**المدخلات (Input)**|**المخرجات (Output)**|**الوظيفة (بالبلدي)**|**الدالة**|
+|---|---|---|---|---|
+|**Predicate**|`T`|`boolean`|بيختبر شرط (مفتش)|`test`|
+|**Consumer**|`T`|`void`|بياخد ومايرجعش (أكّيل)|`accept`|
+|**Supplier**|لا يوجد|`T`|بيدي وماياخدش (مصنع)|`get`|
+|**Function**|`T`|`R`|بيحول من نوع لنوع (خلاط)|`apply`|
+|**UnaryOperator**|`T`|`T`|بيعدل القيمة (نفس النوع)|`apply`|
+|**BinaryOperator**|`T, T`|`T`|عملية حسابية على اتنين|`apply`|

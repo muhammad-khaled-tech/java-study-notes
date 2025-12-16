@@ -268,7 +268,7 @@ public interface SmartCalculator {
 
 Java
 
-```
+```Java
 @FunctionalInterface
 public interface InvalidInterface {
     
@@ -297,7 +297,7 @@ public interface InvalidInterface {
 
 Java
 
-```
+```Java
 // لازم أعمل "new" واكتب اسم الدالة بايدي
 SmartCalculator adder = new SmartCalculator() {
     @Override
@@ -315,7 +315,7 @@ System.out.println("Result: " + adder.calculate(5, 10));
 
 Java
 
-```
+```Java
 // يا جافا، خدي الرقمين دول (a, b) واجمعيهم (a + b)
 // الجافا فهمت لوحدها إن الكود ده بتاع دالة 'calculate'
 SmartCalculator adder = (a, b) -> a + b;
@@ -335,3 +335,5 @@ System.out.println("Result: " + adder.calculate(5, 10));
     
 
 جاهز ندخل على السلايد اللي بعده (غالباً هيشرح أنواع الـ Built-in Functional Interfaces الجاهزة زي `Predicate` و `Consumer`)؟ 🚀
+
+---

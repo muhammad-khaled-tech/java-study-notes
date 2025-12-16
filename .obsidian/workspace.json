@@ -41,7 +41,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Section 2.md",
+                "file": "Exam Simulation/Section 2.md",
                 "mode": "source",
                 "source": false
               },
@@ -213,10 +213,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d9fa16d2498567ec",
+  "active": "a4263eb0ef45c795",
   "lastOpenFiles": [
     "Exam Simulation/Section-1.md",
-    "Section 2.md",
+    "Exam Simulation/Section 2.md",
     "different explanations/Inner Classes.md",
     "Exam Simulation",
     "different explanations/Wrapers.md",

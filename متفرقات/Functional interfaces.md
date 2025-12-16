@@ -104,9 +104,9 @@ Single Abstract Method.
 
 تعالى نشوف الكود اللي في السلايد ونشوف ليه الكمبيوتر زعل:
 
-Java
 
-```
+
+```Java
 @FunctionalInterface // 1. أنت حلفت للكمبيوتر إن ده زرار واحد
 public interface MyFirstFunctionalInterface {
     
@@ -137,9 +137,9 @@ public interface MyFirstFunctionalInterface {
 
 زمان، لو عايز أعمل Thread يطبع كلمة، كنت بضطر أعمل Anonymous Inner Class (كلاس ملوش اسم) عشان أنفذ إنترفيس Runnable.
 
-Java
 
-```
+
+```Java
 // الطريقة القديمة (قبل Java 8)
 // زحمة، أقواس كتير، وكود ملوش لازمة عشان سطر واحد
 Thread t = new Thread(new Runnable() {
@@ -159,7 +159,7 @@ Thread t = new Thread(new Runnable() {
 
 Java
 
-```
+```Java
 // الطريقة الحديثة (Java 8+)
 // لا فيه new ولا فيه Override ولا اسم الدالة
 Thread t = new Thread(() -> System.out.println("Hello from Modern Java!"));

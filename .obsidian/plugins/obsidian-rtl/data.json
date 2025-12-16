@@ -1,6 +1,7 @@
 {
   "fileDirections": {
-    "متفرقات/حاجات متفرقة جات على بالي.md": "rtl"
+    "متفرقات/حاجات متفرقة جات على بالي.md": "rtl",
+    "متفرقات/Functional interfaces.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

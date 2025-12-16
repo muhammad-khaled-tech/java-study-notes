@@ -70,7 +70,7 @@ public class LambdaVar {
 
 **(Source: Lesson 2 - Arrays)**
 
-```
+```java
 public class ArrayVar {
     public static void main(String[] args) {
         var arr1 = new int[]{1, 2, 3};
@@ -96,7 +96,7 @@ public class ArrayVar {
 
 **(Source: Lesson 9 - Java Collections)**
 
-```
+```java
 import java.util.ArrayList;
 
 public class GenericVar {
@@ -128,7 +128,7 @@ public class GenericVar {
 
 **(Source: Lesson 3 - String Handling)**
 
-```
+```java
 public class StringPool {
     public static void main(String[] args) {
         String s1 = "Java";
@@ -158,7 +158,7 @@ public class StringPool {
 
 **(Source: Lesson 3 - String Handling)**
 
-```
+```java
 public class Immutability {
     public static void main(String[] args) {
         String s = " Core ";
@@ -186,7 +186,7 @@ public class Immutability {
 
 **(Source: Lesson 3 - Mutable Strings)**
 
-```
+```java
 public class BuilderChain {
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder("ABC");
@@ -218,7 +218,7 @@ public class BuilderChain {
 
 **(Source: OCP Chapter 1 Excerpt - Text Blocks)**
 
-```
+```java
 public class TextBlock {
     public static void main(String[] args) {
         var block = """

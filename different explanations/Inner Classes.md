@@ -166,9 +166,9 @@ class OuterUser { // الكلاس الخارجي
 
 **الشكل الغريب للكود:**
 
-Java
 
-```
+
+```Java
 OuterClass outer = new OuterClass();           // 1. لازم نعمل الأب الأول
 OuterClass.InnerClass inner = outer.new InnerClass(); // 2. شوف النقطة دي! outer.new
 ```
@@ -207,9 +207,9 @@ OuterClass.InnerClass inner = outer.new InnerClass(); // 2. شوف النقطة 
 
 الكود ده بيوضح العلاقة "الحميمية" بين الكلاسين، وحل مشكلة تشابه الأسماء.
 
-Java
 
-```
+
+```Java
 class Outer {
     // 1. متغير سري للكلاس الخارجي
     private String message = "Hello from Outer World!";

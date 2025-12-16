@@ -80,7 +80,8 @@ public class ArrayVar {
 }
 ```
 
-**A.** `3 3` **B.** `3` followed by Compilation Error **C.** Compilation Error on line 1 **D.** Compilation Error on line 2
+**A.** `3 3`
+**B.** `3` followed by Compilation Error **C.** Compilation Error on line 1 **D.** Compilation Error on line 2
 
 **الإجابة: D (Compilation Error on line 2)**
 
@@ -266,7 +267,7 @@ _(ملحوظة: في الامتحان الحقيقي، الـ Indentation بيب
 
 **(Source: Lesson 3 - Control Statements)**
 
-```
+```java
 public class Unreachable {
     public static void main(String[] args) {
         if(false) {
@@ -295,7 +296,7 @@ public class Unreachable {
 
 **(Source: Lesson 3 - Selection Statements)**
 
-```
+```java
 public class SwitchTrick {
     public static void main(String[] args) {
         int x = 5;
@@ -328,7 +329,7 @@ public class SwitchTrick {
 
 **(Source: Lesson 3 - Jump Statements)**
 
-```
+```java
 public class Labels {
     public static void main(String[] args) {
         int count = 0;
@@ -360,7 +361,7 @@ public class Labels {
 
 **(Source: Lesson 2 - Variables Scope)**
 
-```
+```java
 public class DoWhileScope {
     public static void main(String[] args) {
         do {
@@ -386,7 +387,7 @@ public class DoWhileScope {
 
 **(Source: OCP Chapter 2 - Control Flow)**
 
-```
+```java
 public class YieldTest {
     public static void main(String[] args) {
         int x = 2;
@@ -419,7 +420,7 @@ public class YieldTest {
 
 **(Source: Lesson 2 - Data Types)**
 
-```
+```java
 public class BoolTrap {
     static boolean b;
     public static void main(String[] args) {
@@ -451,7 +452,7 @@ public class BoolTrap {
 
 **(Source: Lesson 3 - Iteration)**
 
-```
+```java
 public class ForLoop {
     public static void main(String[] args) {
         for(int i=0; i<3; System.out.print(i), i++);
@@ -474,5 +475,3 @@ public class ForLoop {
     4. الشرط `1<3`... وهكذا لحد ما يطبع `012`.
 
 ---
-
-**نصيحة أخيرة:** لو عرفت تحل الـ 15 سؤال دول وتفهم "ليه" الإجابة كده، يبقى أنت عديت مرحلة "مبرمج جافا" ودخلت مرحلة "مهندس برمجيات فاهم الـ JVM شغالة إزاي". بالتوفيق يا هندسة! 🚀

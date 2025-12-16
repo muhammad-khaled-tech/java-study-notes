@@ -15,7 +15,7 @@
 
 **(Source: Lesson 4 - Part 3)**
 
-```
+```java
 interface Secrets {
     int CODE = 123;
     protected void reveal();
@@ -23,7 +23,10 @@ interface Secrets {
 }
 ```
 
-**What is the result of compiling this interface?** **A.** Compiles successfully. **B.** Compilation Error at `int CODE`: fields must be private. **C.** Compilation Error at `reveal()`: interface methods cannot be protected. **D.** Compilation Error at `log()`: default methods must be static.
+**What is the result of compiling this interface?**
+**A.** Compiles successfully. 
+**B.** Compilation Error at `int CODE`: fields must be private. 
+**C.** Compilation Error at `reveal()`: interface methods cannot be protected. **D.** Compilation Error at `log()`: default methods must be static.
 
 ---
 

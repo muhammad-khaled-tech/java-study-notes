@@ -81,7 +81,9 @@ public class ArrayVar {
 ```
 
 **A.** `3 3`
-**B.** `3` followed by Compilation Error **C.** Compilation Error on line 1 **D.** Compilation Error on line 2
+**B.** `3` followed by Compilation Error 
+**C.** Compilation Error on line 1 
+**D.** Compilation Error on line 2
 
 **الإجابة: D (Compilation Error on line 2)**
 
@@ -110,7 +112,10 @@ public class GenericVar {
 }
 ```
 
-**A.** `2` **B.** Compilation Error at `list.add(10)` **C.** Runtime Exception **D.** `1`
+**A.** `2` 
+**B.** Compilation Error at `list.add(10)` 
+**C.** Runtime Exception 
+**D.** `1`
 
 **الإجابة: A (2)**
 
@@ -141,7 +146,10 @@ public class StringPool {
 }
 ```
 
-**A.** `true true` **B.** `false false` **C.** `false true` **D.** `true false`
+**A.** `true true` 
+**B.** `false false` 
+**C.** `false true` 
+**D.** `true false`
 
 **الإجابة: C (false true)**
 
@@ -171,7 +179,10 @@ public class Immutability {
 }
 ```
 
-**A.** `|CORE JAVA|` **B.** `|Core Java|` **C.** `|Core|` **D.** `| Core |`
+**A.** `|CORE JAVA|` 
+**B.** `|Core Java|` 
+**C.** `|Core|` 
+**D.** `| Core |`
 
 **الإجابة: D (| Core |)**
 
@@ -197,7 +208,10 @@ public class BuilderChain {
 }
 ```
 
-**A.** `DCBA` **B.** `DBA` **C.** `DC` **D.** `BA`
+**A.** `DCBA` 
+**B.** `DBA` 
+**C.** `DC` 
+**D.** `BA`
 
 **الإجابة: C (DC)**
 
@@ -233,7 +247,10 @@ public class TextBlock {
 
 _Note: Assume `line1` is indented by 4 spaces, and `line2` by 6 spaces._
 
-**A.** `11` **B.** `12` **C.** `13` **D.** `14`
+**A.** `11` 
+**B.** `12` 
+**C.** `13` 
+**D.** `14`
 
 **الإجابة: C (13)**
 
@@ -310,7 +327,10 @@ public class SwitchTrick {
 }
 ```
 
-**A.** `5` **B.** `58` **C.** `D358` **D.** `58D`
+**A.** `5` 
+**B.** `58` 
+**C.** `D358` 
+**D.** `58D`
 
 **الإجابة: B (58)**
 
@@ -344,7 +364,10 @@ public class Labels {
 }
 ```
 
-**A.** `3` **B.** `4` **C.** `6` **D.** `9`
+**A.** `3` 
+**B.** `4` 
+**C.** `6` 
+**D.** `9`
 
 **الإجابة: A (3)**
 

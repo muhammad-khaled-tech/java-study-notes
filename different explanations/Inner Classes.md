@@ -645,3 +645,5 @@ new Runnable() {
 |**الشكل**|`new Interface() { ... }`|
 |**المكان**|غالباً في الـ Event Listeners والـ Threads.|
 |**البديل الحديث**|**Lambda Expressions** (لو بتطبق Functional Interface).|
+
+---

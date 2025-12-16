@@ -298,7 +298,10 @@ public class Unreachable {
 }
 ```
 
-**A.** Prints nothing **B.** Prints `A` **C.** Compilation Error on `if` **D.** Compilation Error on `while`
+**A.** Prints nothing 
+**B.** Prints `A` 
+**C.** Compilation Error on `if` 
+**D.** Compilation Error on `while`
 
 **الإجابة: D (Compilation Error on `while`)**
 
@@ -395,7 +398,10 @@ public class DoWhileScope {
 }
 ```
 
-**A.** Infinite Loop of `5` **B.** Prints `5` once **C.** Runtime Exception **D.** Compilation Error
+**A.** Infinite Loop of `5` 
+**B.** Prints `5` once 
+**C.** Runtime Exception 
+**D.** Compilation Error
 
 **الإجابة: D (Compilation Error)**
 
@@ -427,7 +433,10 @@ public class YieldTest {
 }
 ```
 
-**A.** `5` **B.** `25` **C.** Compilation Error **D.** Runtime Exception
+**A.** `5` 
+**B.** `25` **
+C.** Compilation Error
+**D.** Runtime Exception
 
 **الإجابة: B (25)**
 
@@ -456,7 +465,10 @@ public class BoolTrap {
 }
 ```
 
-**A.** Prints `False` **B.** Prints `True` **C.** Compilation Error (type mismatch) **D.** Runtime Exception
+**A.** Prints `False` 
+**B.** Prints `True` 
+**C.** Compilation Error (type mismatch)
+**D.** Runtime Exception
 
 **الإجابة: B (True)**
 
@@ -483,7 +495,10 @@ public class ForLoop {
 }
 ```
 
-**A.** `012` **B.** `123` **C.** Compilation Error **D.** Infinite Loop
+**A.** `012` 
+**B.** `123` 
+**C.** Compilation Error 
+**D.** Infinite Loop
 
 **الإجابة: A (012)**
 

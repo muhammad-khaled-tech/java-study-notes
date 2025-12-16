@@ -337,3 +337,4 @@ System.out.println("Result: " + adder.calculate(5, 10));
 جاهز ندخل على السلايد اللي بعده (غالباً هيشرح أنواع الـ Built-in Functional Interfaces الجاهزة زي `Predicate` و `Consumer`)؟ 🚀
 
 ---
+Gener

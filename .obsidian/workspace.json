@@ -97,12 +97,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "different explanations/Untitled.md",
+                "file": "different explanations/Inner Classes.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "Inner Classes"
             }
           }
         ],
@@ -273,7 +273,7 @@
   "lastOpenFiles": [
     "different explanations/Untitled 1.md",
     "different explanations/Wrapers.md",
-    "different explanations/Untitled.md",
+    "different explanations/Inner Classes.md",
     "different explanations/Functional interfaces.md",
     "All lectures/Data Types.md",
     "All lectures/The History and Evolution of Java.md",

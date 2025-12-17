@@ -4,7 +4,8 @@
     "different explanations/Functional interfaces.md": "rtl",
     "different explanations/Inner Classes.md": "rtl",
     "All lectures/Exceptions.md": "rtl",
-    "All lectures/Generics and Lambda Expressions and Method Reference.md": "rtl"
+    "All lectures/Generics and Lambda Expressions and Method Reference.md": "rtl",
+    "All lectures/Stream API.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

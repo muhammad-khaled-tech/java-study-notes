@@ -158,7 +158,7 @@ public class UnboxCheck {
 
 **(Source: Lesson 5 - Part 1)**
 
-```
+```java
 public class CacheTrap {
     public static void main(String[] args) {
         Integer a = 127; Integer b = 127;

@@ -169,7 +169,10 @@ public class CacheTrap {
 ```
 
 **What is the output?** 
-**A.** true true **B.** false false **C.** true false **D.** false true
+**A.** true true 
+**B.** false false 
+**C.** true false 
+**D.** false true
 
 **الإجابة: C (true false)**
 
@@ -195,7 +198,11 @@ public class OverloadTrick {
 }
 ```
 
-**What is the output?** **A.** Long **B.** Integer **C.** Compilation Error **D.** Runtime Exception
+**What is the output?**
+**A.** Long 
+**B.** Integer
+**C.** Compilation Error
+**D.** Runtime Exception
 
 **الإجابة: B (Integer)**
 
@@ -220,7 +227,11 @@ public class ParseTrick {
 }
 ```
 
-**What is the output?** **A.** true false **B.** false false **C.** true true **D.** Throws Exception
+**What is the output?** 
+**A.** true false 
+**B.** false false
+**C.** true true 
+**D.** Throws Exception
 
 **الإجابة: A (true false)**
 
@@ -245,7 +256,11 @@ public class EqualityTest {
 }
 ```
 
-**What is the output?** **A.** true **B.** false **C.** Compilation Error **D.** Runtime Exception
+**What is the output?**
+**A.** true 
+**B.** false 
+**C.** Compilation Error 
+**D.** Runtime Exception
 
 **الإجابة: B (false)**
 

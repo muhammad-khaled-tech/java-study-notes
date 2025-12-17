@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/Section-1.md",
+                "file": "Exam Simulation/Section 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Section-1"
+              "title": "Section 1"
             }
           },
           {
@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/Section 2.md",
+                "file": "Exam Simulation/Untitled.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Section 2"
+              "title": "Untitled"
             }
           }
         ],
@@ -213,9 +213,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a4263eb0ef45c795",
+  "active": "d9fa16d2498567ec",
   "lastOpenFiles": [
-    "Exam Simulation/Section-1.md",
+    "Exam Simulation/Section 1.md",
+    "Exam Simulation/Untitled.md",
     "Exam Simulation/Section 2.md",
     "different explanations/Inner Classes.md",
     "Exam Simulation",

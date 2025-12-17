@@ -1,7 +1,5 @@
 
 
----
-
 ### Section 1: The `var` Keyword (Type Inference)
 
 #### Q1: The Null Trap

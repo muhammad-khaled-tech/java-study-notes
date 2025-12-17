@@ -41,7 +41,11 @@ public class StreamReuse {
 }
 ```
 
-**What is the result?** A. 2 B. 0 C. Compilation Error. D. Throws `IllegalStateException` at runtime.
+**What is the result?** 
+A. 2 
+B. 0 
+C. Compilation Error. 
+D. Throws `IllegalStateException` at runtime.
 
 ---
 
@@ -62,7 +66,11 @@ public class Grouping {
 }
 ```
 
-**What is the inferred type of the variable `result`?** A. `Map<String, Integer>` B. `Map<Integer, String>` C. `Map<Integer, List<String>>` D. `Map<String, List<Integer>>`
+**What is the inferred type of the variable `result`?** 
+A. `Map<String, Integer>` 
+B. `Map<Integer, String>` 
+C. `Map<Integer, List<String>>` 
+D. `Map<String, List<Integer>>`
 
 ---
 
@@ -81,7 +89,11 @@ public class Partitioning {
 }
 ```
 
-**What is the output?** A. `null` B. `[]` (Empty List) C. `[CCC]` D. The code does not compile.
+**What is the output?** 
+A. `null` 
+B. `[]` (Empty List) 
+C. `[CCC]` 
+D. The code does not compile.
 
 ---
 
@@ -98,7 +110,11 @@ public class StreamTrap {
 }
 ```
 
-**What is the output?** A. 1 B. 3 C. Compilation Error. D. Throws Exception at runtime.
+**What is the output?** 
+A. 1 
+B. 3 
+C. Compilation Error. 
+D. Throws Exception at runtime.
 
 ---
 
@@ -117,7 +133,11 @@ public class LambdaScope {
 }
 ```
 
-**What is the result?** A. 10 B. 11 C. Compilation Error. D. Runtime Exception.
+**What is the result?** 
+A. 10 
+B. 11 
+C. Compilation Error. 
+D. Runtime Exception.
 
 ---
 

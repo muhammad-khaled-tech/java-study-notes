@@ -1,15 +1,4 @@
-أهلاً بك يا هندسة في "منطقة الألغام" (The Minefield) 💣👨‍🏫 أنت طلبت 15 سؤال MCQ بمواصفات خاصة (Tricky & Senior Level)، وركزت على **Interfaces**، **Wrapper Classes**، و **Inner Classes**. أنا جهزتلك الأسئلة دي عشان نختبر عمق فهمك للـ JVM Internals والـ Compiler Behavior، وكل سؤال فيه "تريكة" صغيرة ممكن توقعك.
-
-**قواعد الاشتباك:**
-
-1. **ركز في كل سطر:** الجافا لغة "دقيقة" (Strict)، والخدعة غالباً بتكون في التفاصيل الصغيرة.
-2. **Compile Time vs Runtime:** اسأل نفسك دايماً: "هل الكومبايلر هيعديها؟" ولو عدت، "إيه اللي هيحصل في الميموري؟".
-
-يلا بينا! 🚀
-
----
-
-### Section 1: Interfaces & Access Modifiers
+### Section 2: Interfaces & Access Modifiers
 
 #### Q1: The "Protected" Interface Trap
 
@@ -23,7 +12,11 @@ interface Secrets {
 }
 ```
 
-**What is the result of compiling this interface?** **A.** Compiles successfully. **B.** Compilation Error at `int CODE`: fields must be private. **C.** Compilation Error at `reveal()`: interface methods cannot be protected. **D.** Compilation Error at `log()`: default methods must be static.
+**What is the result of compiling this interface?** 
+**A.** Compiles successfully. 
+**B.** Compilation Error at `int CODE`: fields must be private. 
+**C.** Compilation Error at `reveal()`: interface methods cannot be protected. 
+**D.** Compilation Error at `log()`: default methods must be static.
 
 **الإجابة: C (Compilation Error at `reveal()`)**
 
@@ -48,7 +41,8 @@ class ConsolePrinter implements Printer {
 }
 ```
 
-**Which lines cause a Compilation Error?** **A.** Only `Printer.print()` **B.** Only `print()` and `new ConsolePrinter().print()` **C.** All three lines. **D.** None, it prints "InterfaceInterfaceInterface".
+**Which lines cause a Compilation Error?** 
+**A.** Only `Printer.print()` **B.** Only `print()` and `new ConsolePrinter().print()` **C.** All three lines. **D.** None, it prints "InterfaceInterfaceInterface".
 
 **الإجابة: B (Only `print()` and `new ConsolePrinter().print()`)**
 
@@ -261,7 +255,9 @@ public class Test {
 
 **Which line correctly instantiates the Inner class?**
 **A.** `Outer.Inner i = new Outer.Inner();` 
-**B.** `Outer.Inner i = new Outer().new Inner();` **C.** `Outer.Inner i = new Outer().Inner();` **D.** `Outer.Inner i = Outer.new Inner();`
+**B.** `Outer.Inner i = new Outer().new Inner();` 
+**C.** `Outer.Inner i = new Outer().Inner();` 
+**D.** `Outer.Inner i = Outer.new Inner();`
 
 **الإجابة: B (`new Outer().new Inner();`)**
 

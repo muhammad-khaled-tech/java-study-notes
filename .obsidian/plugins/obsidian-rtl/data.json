@@ -5,7 +5,9 @@
     "different explanations/Inner Classes.md": "rtl",
     "All lectures/Exceptions.md": "rtl",
     "All lectures/Generics and Lambda Expressions and Method Reference.md": "rtl",
-    "All lectures/Stream API.md": "rtl"
+    "All lectures/Stream API.md": "rtl",
+    "All lectures/Java collections.md": "rtl",
+    "Exam Simulation/Section 1.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

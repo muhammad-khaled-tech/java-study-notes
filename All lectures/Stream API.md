@@ -623,7 +623,7 @@ graph TD
 
 **(مخطط انسيابي: استراتيجية التقسيم)** **(Source:)**
 
-```mermad
+```mermaid
 graph TD
     Data[Big Data List] --> Split{Splitter}
     Split --> Chunk1[Chunk 1 -> Thread A]

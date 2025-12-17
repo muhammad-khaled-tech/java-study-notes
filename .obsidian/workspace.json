@@ -41,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/Untitled.md",
+                "file": "Exam Simulation/Section 3.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Untitled"
+              "title": "Section 3"
             }
           }
         ],
@@ -216,7 +216,7 @@
   "active": "d9fa16d2498567ec",
   "lastOpenFiles": [
     "Exam Simulation/Section 1.md",
-    "Exam Simulation/Untitled.md",
+    "Exam Simulation/Section 3.md",
     "Exam Simulation/Section 2.md",
     "different explanations/Inner Classes.md",
     "Exam Simulation",

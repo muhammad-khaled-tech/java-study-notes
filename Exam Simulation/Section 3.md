@@ -292,7 +292,10 @@ interface SmartFunction {
 ```
 
 **What is the result of compiling this interface?**
-A. Compilation Error: Multiple abstract methods B. Compilation Error: toString/equals cannot be abstract C. Compiles successfully D. Compilation Error: Missing default implementation
+A. Compilation Error: Multiple abstract methods 
+B. Compilation Error: toString/equals cannot be abstract 
+C. Compiles successfully 
+D. Compilation Error: Missing default implementation
 
 **الإجابة: C (Compiles successfully)**
 
@@ -313,7 +316,11 @@ public class LambdaTrap {
 }
 ```
 
-**What is the result?** A. Compiles and runs B. Compilation Error: Incompatible types (int cannot be converted to boolean) C. Compilation Error: Missing return statement D. Runtime Error
+**What is the result?** 
+A. Compiles and runs
+B. Compilation Error: Incompatible types (int cannot be converted to boolean) 
+C. Compilation Error: Missing return statement 
+D. Runtime Error
 
 **الإجابة: B (Compilation Error: Incompatible types)**
 
@@ -337,7 +344,11 @@ public class ScopeTrap {
 }
 ```
 
-**What is the result?** A. Prints `10` B. Prints `11` C. Compilation Error at `x++` D. Compilation Error inside lambda
+**What is the result?** 
+A. Prints `10` 
+B. Prints `11` 
+C. Compilation Error at `x++` 
+D. Compilation Error inside lambda
 
 **الإجابة: D (Compilation Error inside lambda)**
 
@@ -358,7 +369,11 @@ public class ConsumerTrap {
 }
 ```
 
-**What is the result?** A. Compiles successfully B. Compilation Error: Unexpected return value C. Runtime Error D. Ignores the return value
+**What is the result?** 
+A. Compiles successfully 
+B. Compilation Error: Unexpected return value 
+C. Runtime Error
+D. Ignores the return value
 
 **الإجابة: B (Compilation Error: Unexpected return value)**
 
@@ -379,7 +394,11 @@ public class PrimitiveTrap {
 }
 ```
 
-**What is the result?** A. Compiles successfully (Autoboxing works) B. Compilation Error: Incompatible parameter types C. Runtime ClassCastException D. Warning only
+**What is the result?**
+A. Compiles successfully (Autoboxing works) 
+B. Compilation Error: Incompatible parameter types 
+C. Runtime ClassCastException 
+D. Warning only
 
 **الإجابة: B (Compilation Error: Incompatible parameter types)**
 

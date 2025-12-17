@@ -82,7 +82,7 @@ abstract class Athlete implements Runner {
 
 **(Source: Lesson 4 - Part 4)**
 
-```
+```java
 interface A { default void hello() { System.out.print("A"); } }
 interface B { default void hello() { System.out.print("B"); } }
 class C implements A, B { }

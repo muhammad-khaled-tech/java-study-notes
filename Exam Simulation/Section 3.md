@@ -1,15 +1,6 @@
-أهلاً بك يا هندسة في "منطقة الألغام" (The Minefield) 💣👨‍🏫 بناءً على طلبك، قمت بتجهيز 15 سؤال MCQ بمستوى "Senior Level" تركز على الحالات الحرجة (Edge Cases) في **Exception Handling**، **Generics**، و **Functional Interfaces**.
 
-**قواعد الاشتباك:**
 
-1. **التركيز:** معظم الأسئلة تؤدي إلى **Compilation Error**، والتحدي هو معرفة "السبب الدقيق" بناءً على قواعد الـ Compiler الصارمة.
-2. **المصادر:** الأسئلة مبنية على تفاصيل الـ Type Erasure، الـ Inheritance Rules، وقواعد الـ SAM التي تم شرحها في الملفات (خاصة Lessons 6, 7, 8).
-
-يلا بينا! 🚀
-
----
-
-### Section 1: Exception Handling (Hierarchy & Flow)
+### Section 3: Exception Handling (Hierarchy & Flow)
 
 #### Q1: The Unreachable Catch Trap
 
@@ -30,7 +21,11 @@ public class ExceptionTrap {
 }
 ```
 
-**What is the result?** A. Prints `IO` B. Prints `File` C. Prints `IOFile` D. Compilation Error
+**What is the result?** 
+A. Prints `IO`
+B. Prints `File`
+C. Prints `IOFile`
+D. Compilation Error
 
 **الإجابة: D (Compilation Error)**
 
@@ -54,7 +49,11 @@ public class MultiCatchTrap {
 }
 ```
 
-**What is the result?** A. Prints `Caught` B. Runtime Exception C. Compilation Error D. Ignores the exception
+**What is the result?** 
+A. Prints `Caught` 
+B. Runtime Exception 
+C. Compilation Error 
+D. Ignores the exception
 
 **الإجابة: C (Compilation Error)**
 
@@ -81,7 +80,11 @@ public class FinallyTrap {
 }
 ```
 
-**What is the result?** A. Prints `10` B. Throws `RuntimeException` C. Compilation Error (Unreachable code) D. Compilation Error (Missing catch)
+**What is the result?** 
+A. Prints `10` 
+B. Throws `RuntimeException` 
+C. Compilation Error (Unreachable code) 
+D. Compilation Error (Missing catch)
 
 **الإجابة: A (Prints 10)**
 
@@ -104,7 +107,11 @@ class Child extends Parent {
 }
 ```
 
-**What is the result?** A. Compiles successfully B. Compilation Error in `Parent` C. Compilation Error in `Child` D. Runtime Error upon instantiation
+**What is the result?** 
+A. Compiles successfully 
+B. Compilation Error in `Parent` 
+C. Compilation Error in `Child` 
+D. Runtime Error upon instantiation
 
 **الإجابة: C (Compilation Error in Child)**
 
@@ -129,7 +136,8 @@ public class ResourceTrap {
 }
 ```
 
-**What is the result?** A. Compiles and runs B. Compilation Error at line `try` C. Compilation Error inside `catch` block D. Throws `IllegalStateException`
+**What is the result?** 
+A. Compiles and runs B. Compilation Error at line `try` C. Compilation Error inside `catch` block D. Throws `IllegalStateException`
 
 **الإجابة: C (Compilation Error inside catch block)**
 

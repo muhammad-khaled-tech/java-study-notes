@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "different explanations/var.md",
+                "file": "Exam Simulation/Section 1.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "var"
+              "title": "Section 1"
             }
           }
         ]
@@ -195,10 +195,10 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a4263eb0ef45c795",
+  "active": "16b9fec0a8affcaf",
   "lastOpenFiles": [
-    "Exam Simulation/Section 1.md",
     "different explanations/var.md",
+    "Exam Simulation/Section 1.md",
     "Exam Simulation/Total set 4.md",
     "Exam Simulation/Total set 3.md",
     "All lectures/Threading.md",

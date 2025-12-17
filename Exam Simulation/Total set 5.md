@@ -1683,13 +1683,6 @@ System.out.println(list);
 >         
 > - **Result:** `null` comes first, then "A", then "B".
 
-Here is **Exam Set #4** (The "Final Boss" Edition), renumbered starting from **Q36** as a continuation of the previous set, formatted for Obsidian.
-
----
-
-# 🎓 Java OCP Practice Exam - Set 4 (The Final Boss)
-
-**Tags:** #Java #OCP #PracticeExam #Coding #Architecture
 
 ---
 

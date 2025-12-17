@@ -259,7 +259,9 @@ public class Test {
 }
 ```
 
-**Which line correctly instantiates the Inner class?** **A.** `Outer.Inner i = new Outer.Inner();` **B.** `Outer.Inner i = new Outer().new Inner();` **C.** `Outer.Inner i = new Outer().Inner();` **D.** `Outer.Inner i = Outer.new Inner();`
+**Which line correctly instantiates the Inner class?**
+**A.** `Outer.Inner i = new Outer.Inner();` 
+**B.** `Outer.Inner i = new Outer().new Inner();` **C.** `Outer.Inner i = new Outer().Inner();` **D.** `Outer.Inner i = Outer.new Inner();`
 
 **الإجابة: B (`new Outer().new Inner();`)**
 
@@ -311,7 +313,10 @@ class Outer {
 }
 ```
 
-**What is the result?** **A.** Prints 10 **B.** Prints 11 **C.** Compilation Error: variable x is accessed from within inner class. **D.** Runtime Exception.
+**What is the result?** 
+**A.** Prints 10 
+**B.** Prints 11 **C.** Compilation Error: variable x is accessed from within inner class. 
+**D.** Runtime Exception.
 
 **الإجابة: C (Compilation Error)**
 

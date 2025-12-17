@@ -2,7 +2,8 @@
   "fileDirections": {
     "different explanations/حاجات متفرقة جات على بالي.md": "rtl",
     "different explanations/Functional interfaces.md": "rtl",
-    "different explanations/Inner Classes.md": "rtl"
+    "different explanations/Inner Classes.md": "rtl",
+    "All lectures/Exceptions.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

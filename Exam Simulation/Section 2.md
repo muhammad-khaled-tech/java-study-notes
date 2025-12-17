@@ -104,7 +104,7 @@ class C implements A, B { }
 
 **(Source: Lesson 4 - Part 5)**
 
-```
+```java
 interface Calculator {
     private static int helper() { return 5; }
     default int add(int x) { return x + helper(); }

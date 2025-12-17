@@ -165,8 +165,19 @@
               "icon": "lucide-list",
               "title": "Outline of Untitled"
             }
+          },
+          {
+            "id": "9572013764d1971d",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",

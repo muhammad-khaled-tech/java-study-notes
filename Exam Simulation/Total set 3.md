@@ -101,7 +101,10 @@ public class AtomicTest {
 }
 ```
 
-**Which statement is true regarding the output?** A. It will always be "1 2 ". B. It will always be "1 1 ". C. It could be "1 2 ", "2 1 ", or "2 2 ". D. The code causes a deadlock.
+**Which statement is true regarding the output?** 
+A. It will always be "1 2 ". 
+B. It will always be "1 1 ". 
+C. It could be "1 2 ", "2 1 ", or "2 2 ". D. The code causes a deadlock.
 
 **Correct Answer: C**
 

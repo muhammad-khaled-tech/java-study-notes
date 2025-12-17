@@ -1,366 +1,671 @@
-Here is **Exam Set #1**. I have designed these questions based on the scope defined in your **Slides** (Lessons 1-10 + Appendix) and excavated the deep technical logic from the **Boyarsky/Selikoff Textbook**.
 
-This set covers: **Control Flow, Inner Classes, Generics, Lambdas, Streams, Concurrency, I/O (Serialization), and Exceptions.**
-
----
-
-# Part 1: The Questions
 
 ### Question 1: Switch Expressions & Control Flow
 
-**Topic:** Control Statements (Lesson 3 / Textbook Ch 2)
+> [!info] Source
+> 
+> Chapter 2 - Controlling Program Flow / Lesson 3
 
-```
-public class SwitchTest {
+
+
+```java
+public class SwitchMagic {
     public static void main(String[] args) {
-        final int score = 4;
-        var result = switch (score) {
-            case 1, 2, 3 -> "Low";
-            case 4 -> {
-                String s = "High";
-                return s;
+        int k = 10;
+        var result = switch(k) {
+            case 10 -> {
+                System.out.print("A");
+                yield 100;
             }
-            default -> "Unknown";
+            default -> {
+                System.out.print("B");
+                return 0;
+            }
         };
-        System.out.println(result);
+        System.out.print(result);
     }
 }
 ```
 
-**What is the result?** A. High B. The code does not compile because of `var`. C. The code does not compile because of `return`. D. The code compiles but throws an exception at runtime.
+**What is the result?**
+
+**A.** A100
+
+**B.** B0
+
+**C.** Compilation Error: `return` not allowed.
+
+**D.** Compilation Error: `yield` not allowed.
+
+> [!success] Answer: C (Compilation Error: `return` not allowed)
+
+> [!info] Deep Dive
+> 
+> In a Switch Expression (a switch that returns a value), you act within a specific scope to compute a result for that variable.
+> 
+> 1. **`yield` Statement:** This is the correct way to return a value from a block (`{...}`) inside a switch expression. It terminates the switch expression, not the method.
+>     
+> 2. **`return` Statement:** This attempts to terminate the **entire method** (`main`). However, because the switch expression must resolve to a value to be assigned to `result`, putting a `return` statement creates a conflict. The compiler expects a value for `result` in all branches (via `yield` or a direct arrow `-> value`). A `return` leaves `result` undefined.
+>     
+> 3. **Correction:** The `default` block should use `yield 0;` instead of `return 0;`.
+>     
 
 ---
 
-### Question 2: Static Nested Classes & Access Modifiers
+### Question 2: Parallel Stream Reduction & Ordering
 
-**Topic:** Inner Classes (Lesson 5 / Textbook Ch 3)
+> [!info] Source
+> 
+> Chapter 6 - Streams / Lesson 9
 
-```
-class Outer {
-    private int x = 10;
-    static int y = 20;
 
-    static class Inner {
-        public void modify() {
-            y = 30;  // Line 1
-            x = 40;  // Line 2
-        }
-    }
-}
-```
 
-**What is the result?** A. The code compiles successfully. B. Compilation error at Line 1 only. C. Compilation error at Line 2 only. D. Compilation error at both Line 1 and Line 2.
+```Java
+import java.util.List;
 
----
-
-### Question 3: Generics & Wildcards
-
-**Topic:** Generics (Lesson 7 / Textbook Ch 5)
-
-```
-import java.util.*;
-
-public class WildcardTest {
+public class OrderChaos {
     public static void main(String[] args) {
-        List<? extends Number> list = new ArrayList<Integer>();
-        list.add(null);      // Line 1
-        list.add(10);        // Line 2
-        Number n = list.get(0); // Line 3
-    }
-}
-```
-
-**What is the result?** A. Compilation error at Line 1. B. Compilation error at Line 2. C. Compilation error at Line 3. D. The code compiles and runs successfully.
-
----
-
-### Question 4: Exception Handling & Finally Block
-
-**Topic:** Exception Handling (Lesson 6 / Textbook Ch 4)
-
-```
-public class ExceptionFlow {
-    public static String method() {
-        try {
-            throw new RuntimeException("A");
-        } catch (Exception e) {
-            return "B";
-        } finally {
-            return "C";
-        }
-    }
-
-    public static void main(String[] args) {
-        System.out.print(method());
-    }
-}
-```
-
-**What is the result?** A. A B. B C. C D. BC
-
----
-
-### Question 5: Serialization & Modifiers
-
-**Topic:** I/O & Modifiers (Appendix 1 / Textbook Ch 9)
-
-```
-import java.io.*;
-
-class State implements Serializable {
-    private static int staticVar = 10;
-    private transient int transVar = 20;
-
-    public static void main(String[] args) throws Exception {
-        State s = new State();
-        s.staticVar = 50;
-        s.transVar = 60;
-
-        // Serialize
-        var out = new ObjectOutputStream(new FileOutputStream("state.ser"));
-        out.writeObject(s);
-        out.close();
-
-        s.staticVar = 90;
-
-        // Deserialize
-        var in = new ObjectInputStream(new FileInputStream("state.ser"));
-        State s2 = (State) in.readObject();
-        System.out.println(s2.staticVar + " " + s2.transVar);
-    }
-}
-```
-
-**What is the result?** A. 50 60 B. 90 0 C. 50 0 D. 90 20
-
----
-
-### Question 6: Concurrency & Thread Pools
-
-**Topic:** Multi-Threading (Lesson 10 / Textbook Ch 8)
-
-```
-import java.util.concurrent.*;
-
-public class PoolTest {
-    public static void main(String[] args) throws InterruptedException {
-        ExecutorService service = Executors.newSingleThreadExecutor();
-        service.submit(() -> System.out.print("A"));
-        service.shutdown();
-        service.submit(() -> System.out.print("B"));
-    }
-}
-```
-
-**What is the result?** A. AB B. A C. A followed by a `RejectedExecutionException`. D. The code does not compile.
-
----
-
-### Question 7: Lambda Scope & Effective Finality
-
-**Topic:** Lambda Expressions (Lesson 8 / Textbook Ch 3)
-
-```
-import java.util.function.Supplier;
-
-public class LambdaScope {
-    public static void main(String[] args) {
-        int value = 10;
-        Supplier<Integer> s = () -> value; // Line 1
-        value++; // Line 2
-        System.out.println(s.get()); // Line 3
-    }
-}
-```
-
-**What is the result?** A. 10 B. 11 C. Compilation error at Line 1. D. Compilation error at Line 2.
-
----
-
-### Question 8: Stream Reduction
-
-**Topic:** Streams (Lesson 9 / Textbook Ch 6)
-
-```
-import java.util.stream.Stream;
-
-public class Reducer {
-    public static void main(String[] args) {
-        Integer val = Stream.of(1, 2, 3)
-            .reduce(10, (a, b) -> a + b, (a, b) -> a - b);
+        List<Integer> data = List.of(1, 2, 3, 4, 5);
+        int val = data.parallelStream()
+            .reduce(0, (a, b) -> a - b);
         System.out.println(val);
     }
 }
 ```
 
-**What is the result?** A. 16 B. 6 C. 10 D. The result is unpredictable because of the combiner.
+**What is the output?**
+
+**A.** -15
+
+**B.** 15
+
+**C.** -5
+
+**D.** The output is unpredictable.
+
+> [!success] Answer: D (The output is unpredictable)
+
+> [!info] Deep Dive
+> 
+> The reduce operation requires the accumulator function to be Associative.
+> 
+> 1. **Associativity Rule:** `(a op b) op c` must equal `a op (b op c)`.
+>     
+> 2. **Subtraction:** Subtraction is **NOT** associative. `(1 - 2) - 3 = -4`, but `1 - (2 - 3) = 2`.
+>     
+> 3. **Parallel Execution:** The framework splits the data into chunks. Thread A might compute `1-2`, Thread B might compute `3-4`. The order in which these partial results are combined is non-deterministic in parallel streams.
+>     
+> 4. **Result:** You might get `-15`, `-5`, or other values depending on how the Fork/Join pool splits the task.
+>     
 
 ---
 
-### Question 9: Interface Methods & Inheritance
+### Question 3: Records & Compact Constructors
 
-**Topic:** Modifiers & Interfaces (Lesson 4 / Textbook Ch 3)
+> [!info] Source
+> 
+> Chapter 3 - Object-Oriented Approach / Lesson 5
 
-```
-interface A {
-    default void run() { System.out.print("A"); }
-}
-interface B {
-    default void run() { System.out.print("B"); }
-}
-class C implements A, B {
-    public void run() { System.out.print("C"); }
+Java
 
-    public static void main(String[] args) {
-        new C().run();
+```Java
+public record User(String name) {
+    public User {
+        if (name == null) throw new IllegalArgumentException();
+        this.name = name.toUpperCase(); // Line X
     }
 }
 ```
 
-**What is the result?** A. C B. Compilation error: C inherits unrelated defaults for run(). C. Compilation error: C cannot implement both interfaces. D. A
+**What occurs when compiling this record?**
+
+**A.** Compiles successfully.
+
+**B.** Compilation Error at Line X: Cannot assign to final field.
+
+**C.** Compilation Error at Line X: Name clash.
+
+**D.** Runtime Exception.
+
+> [!success] Answer: B (Compilation Error at Line X)
+
+> [!info] Deep Dive
+> 
+> This is a strict rule regarding Compact Constructors in Records.
+> 
+> 1. **Implicit Assignment:** The compact constructor (which has no parameters `()`) runs **before** the implicit assignment of fields happens.
+>     
+> 2. **The Error:** By writing `this.name = ...`, you are trying to assign the final field manually. However, Java will automatically assign the field _after_ your constructor block finishes. This would result in a "double assignment" of a final variable, which is illegal.
+>     
+> 3. **The Fix:** Modify the parameter directly: `name = name.toUpperCase();`. Java will then use this modified parameter to assign the field automatically.
+>     
 
 ---
 
-### Question 10: Array Initialization
+### Question 4: Module Service Directives
 
-**Topic:** Data Types & Arrays (Lesson 2 / Textbook Ch 5)
+> [!info] Source
+> 
+> Chapter 7 - Modules / Lesson 4
 
+Java
+
+```Java
+module com.provider {
+    provides com.api.Service with com.impl.ServiceImpl;
+    // Line X
+}
 ```
-public class ArrayInit {
-    public static void main(String[] args) {
-        int[][] matrix = new int[];
-        matrix = new int;
-        matrix = new int;
 
-        System.out.println(matrix + " " + matrix);
+**Which directive is required at Line X to allow consumers to use the `ServiceImpl` class via Reflection?**
+
+**A.** `exports com.impl;`
+
+**B.** `opens com.impl;`
+
+**C.** `requires transitive com.impl;`
+
+**D.** `uses com.impl.ServiceImpl;`
+
+> [!success] Answer: B (`opens com.impl;`)
+
+> [!info] Deep Dive
+> 
+> 1. **`exports`:** Makes the public API of a package visible to other modules for compile-time and run-time use. It does **not** allow "Deep Reflection" (accessing private members via `setAccessible(true)`).
+>     
+> 2. **`opens`:** This is the specific directive for **Reflection**. It allows other modules (like Spring or Hibernate) to reflectively access classes in the package, including private members, even if the package is not exported for general use.
+>     
+> 3. **`provides`:** Declares that this module offers a service implementation, but doesn't open it for reflection.
+>     
+
+---
+
+### Question 5: NIO.2 Path Relativization
+
+> [!info] Source
+> 
+> Chapter 9 - I/O / Lesson Appendix
+
+Java
+
+```Java
+import java.nio.file.*;
+
+public class PathTest {
+    public static void main(String[] args) {
+        Path p1 = Path.of("/a/b");
+        Path p2 = Path.of("/a/b/c/d");
+        System.out.println(p1.relativize(p2));
     }
 }
 ```
 
-**What is the result?** A. 0 0 B. 0 followed by an ArrayIndexOutOfBoundsException. C. Compilation error. D. NullPointerException.
+**What is the output?**
+
+**A.** `../..`
+
+**B.** `c/d`
+
+**C.** `/c/d`
+
+**D.** `d/c`
+
+> [!success] Answer: B (`c/d`)
+
+> [!info] Deep Dive
+> 
+> relativize(p2) answers the question: "How do I get to p2 from p1?"
+> 
+> 1. **Common Root:** Both start at `/a/b`.
+>     
+> 2. **The Difference:** To go from `/a/b` to `/a/b/c/d`, you simply need to go down into `c` and then `d`.
+>     
+> 3. **Result:** `c/d`.
+>     
+> 4. _Note:_ If the question was `p2.relativize(p1)`, the answer would be `../..` (go up two levels).
+>     
 
 ---
 
-# Part 2: Detailed Answer Key
+### Question 6: JDBC ResultSet Type Scroll Sensitivity
 
-### Answer 1
+> [!info] Source
+> 
+> Chapter 10 - JDBC / Lesson Appendix
 
-- **Correct Answer:** C
-- **Concept:** Switch Expressions (`yield` vs `return`)
-- **Deep Explanation:** In a Switch Expression (introduced in Java 14), you must return a value to the variable being assigned (`result`). If you use a code block `{...}`, you must use the keyword `yield` to return the value. The keyword `return` attempts to exit the _method_ (`main`), not the switch. Since the switch expression expects a value to be assigned to `result`, checking out of the method entirely creates an incomplete expression logic or, more specifically, `return` is simply forbidden inside a switch expression block.
-- **Why it's Right:** Textbook Chapter 2 confirms that `yield` is required for blocks in switch expressions.
-- **Why Others are Wrong:**
-    - A is incorrect because the code fails to compile.
-    - B is incorrect because `var` is valid here (inferred as String).
-    - D is incorrect because this is a compile-time error.
+Java
 
-### Answer 2
+```
+Statement stmt = conn.createStatement(
+    ResultSet.TYPE_SCROLL_SENSITIVE,
+    ResultSet.CONCUR_UPDATABLE);
+ResultSet rs = stmt.executeQuery("SELECT * FROM Inventory");
+rs.next();
+// External update happens here modifying the current row in DB
+System.out.println(rs.getString("qty"));
+```
 
-- **Correct Answer:** C
-- **Concept:** Static Nested Classes
-- **Deep Explanation:** A `static` nested class is behaviorally a top-level class that happens to be nested for packaging convenience. It does _not_ have an implicit reference to an instance of the `Outer` class. Therefore, it cannot access non-static instance variables (like `x`) directly. It can only access static members (like `y`).
-- **Why it's Right:** Line 2 attempts to access `x` (instance variable) from a static context (Static Inner Class) without an object reference.
-- **Why Others are Wrong:**
-    - A is incorrect because Line 2 fails.
-    - B is incorrect because accessing `y` (static) is perfectly valid.
-    - D is incorrect because Line 1 is valid.
+**If an external process modifies the 'qty' of the current row while the ResultSet is open, what happens?**
 
-### Answer 3
+**A.** The new value is printed.
 
-- **Correct Answer:** B
-- **Concept:** Generics Upper Bounded Wildcards (PECS)
-- **Deep Explanation:** `List<? extends Number>` means "A list of _some_ type that extends Number". It could be `List<Integer>`, `List<Double>`, or `List<BigDecimal>`. Because the compiler cannot guarantee the underlying type, it effectively makes the list **read-only** (except for `null`, which matches all reference types). You cannot add an `Integer` because the list might actually point to a `List<Double>`.
-- **Why it's Right:** Line 2 tries to add `10`, violating the upper-bound safety rule found in Lesson 7 and Textbook Chapter 5.
-- **Why Others are Wrong:**
-    - A is incorrect because adding `null` is always allowed.
-    - C is incorrect because reading _from_ an `extends` list is allowed (you get back the upper bound, `Number`).
-    - D is incorrect due to the error at Line 2.
+**B.** The old value is printed.
 
-### Answer 4
+**C.** A `SQLException` is thrown.
 
-- **Correct Answer:** C
-- **Concept:** Finally Block Dominance
-- **Deep Explanation:** The `try` block throws an exception. The `catch` block catches it and attempts to `return "B"`. However, before the method can actually return, the `finally` block **must** execute. If a `finally` block contains a `return` statement, it overrides any previous return value or thrown exception. The method abruptly completes with the value from the `finally` block.
-- **Why it's Right:** As detailed in Lesson 6 (Slide 287 "The finally Clause"), a return in `finally` masks the original return.
-- **Why Others are Wrong:**
-    - A is incorrect because the exception is caught.
-    - B is incorrect because the `catch` return is superseded.
-    - D is incorrect because a method can only return one value.
+**D.** The behavior is undefined.
 
-### Answer 5
+> [!success] Answer: A (The new value is printed)
 
-- **Correct Answer:** B
-- **Concept:** Serialization (`transient` & `static`)
-- **Deep Explanation:**
-    1. **static:** Static variables belong to the _class_, not the object. They are **not** serialized. When deserializing, the JVM looks at the _current_ value of the static variable in the classloader. Since we set `s.staticVar = 90` _after_ serialization but _before_ the print statement, the deserialized object sees the current class value: 90.
-    2. **transient:** Transient variables are explicitly ignored during serialization. When `s2` is deserialized, `transVar` is initialized to the default value for `int`, which is 0.
-- **Why it's Right:** Explained in Appendix 1/Textbook Chapter 9 regarding `Serializable`.
-- **Why Others are Wrong:**
-    - A and C are incorrect regarding the static variable (it doesn't revert to 50).
-    - D is incorrect regarding the transient variable (it doesn't keep the value 20).
+> [!info] Deep Dive
+> 
+> The key lies in ResultSet.TYPE_SCROLL_SENSITIVE.
+> 
+> 1. **`INSENSITIVE`:** The ResultSet takes a snapshot of the data. Changes made by others are **not** visible.
+>     
+> 2. **`SENSITIVE`:** The ResultSet maintains a live link (or refreshes frequently). Changes made to the database by other transactions **are visible** to the current ResultSet cursor.
+>     
+> 3. Since it is `SENSITIVE`, Java fetches the latest data, reflecting the external update.
+>     
 
-### Answer 6
+---
 
-- **Correct Answer:** C
-- **Concept:** ExecutorService Lifecycle
-- **Deep Explanation:** Once `service.shutdown()` is called, the ExecutorService stops accepting new tasks. It continues to execute submitted tasks, but any _new_ calls to `submit()` will trigger a `RejectedExecutionException`.
-- **Why it's Right:** Lesson 10 and Textbook Chapter 8 define the behavior of `shutdown()`. "A" prints successfully, but the second submit fails.
-- **Why Others are Wrong:**
-    - A assumes the second task is accepted (incorrect).
-    - B implies the second task is ignored silently (incorrect, it throws an exception).
-    - D is incorrect; the code syntax is valid.
+### Question 7: Map.merge Functionality
 
-### Answer 7
+> [!info] Source
+> 
+> Chapter 5 - Collections / Lesson 9
 
-- **Correct Answer:** D
-- **Concept:** Effectively Final variables in Lambdas
-- **Deep Explanation:** Any local variable used inside a lambda expression (or anonymous inner class) must be **final** or **effectively final**. This means the variable cannot be modified anywhere in its scope (before or after the lambda). By performing `value++` on Line 2, `value` is no longer effectively final.
-- **Why it's Right:** The compiler detects that `value` is modified, invalidating its usage inside the lambda at Line 1. However, the error usually flags the _usage_ (Line 1) or the _modification_ (Line 2) depending on the compiler, but logically the modification at Line 2 destroys the "effectively final" status required by Line 1. (Note: Most compilers flag the usage inside the lambda, but the _cause_ is line 2. If forced to choose the line causing the logic break, it is the modification). _Correction on Standard Exam Logic:_ The compile error usually points to the variable usage inside the lambda saying "local variables referenced from a lambda expression must be final or effectively final". However, option D is acceptable if interpreted as "Line 2 makes it illegal". But strictly speaking, the red underline appears at Line 1 usage. Let's look closely at standard behavior: The compilation error occurs at Line 1 because `value` is not effectively final. _However_, usually exam questions flag the _act of modification_ if the question asks "Which line causes the error?". Actually, usually removing Line 2 fixes it. Let's stick to the rule: The variable is modified, thus not effectively final. The error is reported at the lambda usage. **WAIT**, I selected "D" in the key initially? Let me re-evaluate. If I comment out line 2, line 1 works. If I comment out line 1, line 2 works. The conflict is mutual. However, typically the error is "Usage at Line 1 is invalid because Line 2 exists". Let's stick with **Line 2 (Option D)** being the "cause" in the context of the question asking what breaks the effectively final rule, or **Line 1 (Option C)** as the location of the error message. _Self-Correction:_ In OCP exams, if you modify the variable, the error is usually cited as "variable used in lambda expression should be final or effectively final". This is an error _at the lambda_. So **C** is technically more precise regarding where the compiler complains.
-- _Re-evaluating Answer Key:_ I will change the correct answer to **C** (Line 1) to be safe with compiler output, or ensure the explanation clarifies. Actually, looking at OpenJDK `javac`: `error: local variables referenced from a lambda expression must be final or effectively final`. This error points to Line 1.
-- **REVISED Correct Answer:** **C** (Compilation error at Line 1).
-- **Why Others are Wrong:**
-    - A and B are incorrect because it doesn't compile.
+Java
 
-### Answer 8
+```
+import java.util.*;
+public class MergeMap {
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("msg", "Hello");
+        map.merge("msg", "World", (oldVal, newVal) -> null);
+        System.out.println(map.get("msg"));
+    }
+}
+```
 
-- **Correct Answer:** A
-- **Concept:** Stream Reduction (Sequential)
-- **Deep Explanation:** The `reduce` method here takes three arguments: `identity` (10), `accumulator`, and `combiner`. However, this is a **sequential** stream (created via `Stream.of`).
-    - In a sequential stream, the **combiner is NOT used**.
-    - Execution:
-        1. Start with identity `10`.
-        2. Accumulate 1: `10 + 1 = 11`.
-        3. Accumulate 2: `11 + 2 = 13`.
-        4. Accumulate 3: `13 + 3 = 16`.
-- **Why it's Right:** Textbook Chapter 6 confirms the combiner is only used in parallel streams to merge partial results.
-- **Why Others are Wrong:**
-    - B would be the result if the identity was 0.
-    - C is just the identity.
-    - D is incorrect because the stream is sequential; the output is deterministic.
+**What is the output?**
 
-### Answer 9
+**A.** `Hello`
 
-- **Correct Answer:** A
-- **Concept:** Interface Default Method Conflicts
-- **Deep Explanation:** Java allows a class to implement multiple interfaces. If both interfaces define a `default` method with the same signature (`void run()`), there is a conflict. The implementing class **MUST** override the method to resolve the ambiguity.
-- **Why it's Right:** Class `C` _does_ override `run()`. It provides its own implementation (`System.out.print("C")`). This resolves the conflict perfectly.
-- **Why Others are Wrong:**
-    - B would be correct _only if_ Class C did not provide its own implementation of `run()`.
-    - C is incorrect; implementing multiple interfaces is standard Java.
-    - D is incorrect because the overridden method in C takes precedence.
+**B.** `World`
 
-### Answer 10
+**C.** `HelloWorld`
 
-- **Correct Answer:** B
-- **Concept:** Multidimensional Arrays & Initialization
-- **Deep Explanation:**
-    - `new int[]` creates an array of arrays of length 2. `matrix` and `matrix` are initially null.
-    - `matrix = new int` initializes the first row with 3 columns (indices 0, 1, 2).
-    - `matrix = new int` initializes the second row with 2 columns (indices 0, 1).
-    - `matrix` exists (default int 0).
-    - `matrix` accesses index 2 of the second row. The second row has length 2 (indices 0 and 1). Index 2 is out of bounds.
-- **Why it's Right:** Accessing index 2 on an array of length 2 throws `ArrayIndexOutOfBoundsException`.
-- **Why Others are Wrong:**
-    - A is incorrect because the second access fails.
-    - C is incorrect; syntax is valid (jagged arrays).
-    - D is incorrect because `matrix` was initialized; it's not null, just too short.
+**D.** `null`
+
+> [!success] Answer: D (`null`)
+
+> [!info] Deep Dive
+> 
+> The merge method has specific logic for removal:
+> 
+> 1. It checks if the key exists. Here, "msg" exists with "Hello".
+>     
+> 2. It applies the remapping function: `(old, new) -> null`.
+>     
+> 3. **Crucial Rule:** If the remapping function returns `null`, the `merge` method **removes** the key from the map entirely.
+>     
+> 4. `map.get("msg")` returns `null` because the key is no longer in the map.
+>     
+
+---
+
+### Question 8: Atomic Operations & Race Conditions
+
+> [!info] Source
+> 
+> Chapter 8 - Concurrency / Lesson 10
+
+Java
+
+```
+AtomicInteger count = new AtomicInteger(0);
+// In concurrent threads:
+if (count.get() < 10) {
+    count.incrementAndGet();
+}
+```
+
+**Is this code thread-safe?**
+
+**A.** Yes, because `AtomicInteger` methods are atomic.
+
+**B.** No, because there is a "Check-Then-Act" race condition.
+
+**C.** Yes, because `get()` creates a memory barrier.
+
+**D.** No, because `incrementAndGet` is not synchronized.
+
+> [!success] Answer: B (No, "Check-Then-Act" race condition)
+
+> [!info] Deep Dive
+> 
+> Although count.get() and count.incrementAndGet() are individually atomic, the block of logic is not.
+> 
+> 1. **Thread A** reads `count` as 9 (Logic: 9 < 10 is True).
+>     
+> 2. **Context Switch** happens.
+>     
+> 3. **Thread B** reads `count` as 9 (Logic: 9 < 10 is True).
+>     
+> 4. **Thread B** increments `count` to 10.
+>     
+> 5. **Thread A** resumes. It already decided to enter the block. It increments `count` to 11.
+>     
+> 6. **Result:** The limit of 10 was breached. To fix this, you would need a loop with `compareAndSet`.
+>     
+
+---
+
+### Question 9: Generics & Array Creation
+
+> [!info] Source
+> 
+> Lesson 7 - Generics
+
+Java
+
+```
+public class GenericArray<T> {
+    public void create() {
+        T[] array = new T; // Line X
+    }
+}
+```
+
+**What happens at Line X?**
+
+**A.** Compiles successfully.
+
+**B.** Compilation Error: Generic array creation.
+
+**C.** Runtime ClassCastException.
+
+**D.** Creates an array of Objects.
+
+> [!success] Answer: B (Compilation Error: Generic array creation)
+
+> [!info] Deep Dive
+> 
+> Java strictly forbids creating arrays of a generic type parameter (new T[]).
+> 
+> 1. **Type Erasure:** At runtime, `T` is erased to `Object`.
+>     
+> 2. **Heap Pollution:** If Java allowed `new T`, it would effectively create `new Object`. If you passed this array to code expecting `String[]`, it would crash at runtime only when accessed, breaking the type-safety guarantee of Generics.
+>     
+> 3. **Workaround:** You must create `new Object` and cast it `(T[])`, or pass a `Class<T>` literal to perform reflection-based creation (`Array.newInstance`).
+>     
+
+---
+
+### Question 10: try-with-resources & Suppression
+
+> [!info] Source
+> 
+> Chapter 4 - Exceptions / Lesson 6
+
+Java
+
+```
+class Door implements AutoCloseable {
+    public void close() { throw new RuntimeException("Shell"); }
+}
+public class House {
+    public static void main(String[] args) {
+        try (Door d = new Door()) {
+            throw new RuntimeException("Room");
+        } catch (Exception e) {
+            System.out.print(e.getMessage() + " " + e.getSuppressed().getMessage());
+        }
+    }
+}
+```
+
+**What is the output?**
+
+**A.** `Shell Room`
+
+**B.** `Room Shell`
+
+**C.** `Room`
+
+**D.** `Shell`
+
+> [!success] Answer: B (`Room Shell`)
+
+> [!info] Deep Dive
+> 
+> 1. **Primary Exception:** The logic inside the `try` block throws "Room". This is the main exception.
+>     
+> 2. **Automatic Closing:** Java attempts to close the resource `Door`.
+>     
+> 3. **Secondary Exception:** The `close()` method throws "Shell".
+>     
+> 4. **Suppression:** Since an exception ("Room") is already flying, Java **suppresses** the "Shell" exception and attaches it to the "Room" exception.
+>     
+> 5. **Output:** `e.getMessage()` is "Room". `e.getSuppressed().getMessage()` is "Shell".
+>     
+
+---
+
+### Question 11: DateTimeFormatter & Literals
+
+> [!info] Source
+> 
+> Chapter 1 - Date/Time / Lesson Appendix
+
+Java
+
+```
+LocalDateTime dt = LocalDateTime.of(2022, 10, 20, 15, 30);
+var f = DateTimeFormatter.ofPattern("MMMM' at 'h' o''clock'");
+System.out.println(f.format(dt));
+```
+
+**What is the output?**
+
+**A.** October at 3 o'clock
+
+**B.** October at 3 o''clock
+
+**C.** October at 3 o clock
+
+**D.** Runtime Exception: Invalid pattern.
+
+> [!success] Answer: A (October at 3 o'clock)
+
+> [!info] Deep Dive
+> 
+> In DateTimeFormatter patterns:
+> 
+> 1. **Single Quotes (`'`):** Used to escape text. `' at '` outputs the literal string " at ".
+>     
+> 2. **Double Single Quote (`''`):** This is the escape sequence for a single quote itself. `o''clock` results in the literal text "o'clock".
+>     
+> 3. **Result:** "MMMM" (Full Month) + " at " + "h" (12-hour format) + " o'clock" = October at 3 o'clock.
+>     
+
+---
+
+### Question 12: Stream API - groupingBy & Mapping
+
+> [!info] Source
+> 
+> Chapter 6 - Streams / Lesson 9
+
+Java
+
+```
+Stream<String> s = Stream.of("Apple", "Banana", "Apricot");
+var map = s.collect(Collectors.groupingBy(
+    str -> str.charAt(0),
+    Collectors.mapping(String::toUpperCase, Collectors.toList())
+));
+System.out.println(map);
+```
+
+**What is the content of the map?**
+
+**A.** `{A=[Apple, Apricot], B=[Banana]}`
+
+**B.** `{A=[APPLE, APRICOT], B=[BANANA]}`
+
+**C.** `{65=[APPLE, APRICOT], 66=[BANANA]}`
+
+**D.** Compilation Error.
+
+> [!success] Answer: B (`{A=[APPLE, APRICOT], B=[BANANA]}`)
+
+> [!info] Deep Dive
+> 
+> This uses a Downstream Collector.
+> 
+> 1. **First Argument (Classifier):** Groups by the first char (`'A'`, `'B'`).
+>     
+> 2. **Second Argument (Downstream):** `mapping` applies a transformation (`toUpperCase`) _before_ collecting into a List.
+>     
+> 3. **Flow:** "Apple" -> Group 'A' -> Transform to "APPLE" -> Add to List.
+>     
+> 4. **Result:** The keys are Characters, and values are Lists of uppercase Strings.
+>     
+
+---
+
+### Question 13: Local Variable Type Inference (var)
+
+> [!info] Source
+> 
+> Chapter 1 - Variables / Lesson 2
+
+Java
+
+```
+public class VarCheck {
+    // var x = 10; // Line 1
+    public void test() {
+        var a = 10;      // Line 2
+        var b = (String) null; // Line 3
+        var c = {1, 2};  // Line 4
+    }
+}
+```
+
+**Which lines cause a compilation error?**
+
+**A.** Line 1 and Line 4
+
+**B.** Line 3 and Line 4
+
+**C.** Line 1 and Line 3
+
+**D.** All lines.
+
+> [!success] Answer: A (Line 1 and Line 4)
+
+> [!info] Deep Dive
+> 
+> 1. **Line 1 (`var x = 10`):** **Error.** `var` is not allowed for instance variables (fields). It is only for local variables.
+>     
+> 2. **Line 2 (`var a = 10`):** **Valid.** Infers `int`.
+>     
+> 3. **Line 3 (`var b = (String) null`):** **Valid.** `null` alone is illegal, but casting it provides a type (`String`), so inference works.
+>     
+> 4. **Line 4 (`var c = {1, 2}`):** **Error.** Array Initializers (`{}`) require an explicit type on the left or `new int[]{}` on the right. Inference cannot guess the array type from standalone brackets.
+>     
+
+---
+
+### Question 14: Serialization & Inheritance
+
+> [!info] Source
+> 
+> Chapter 9 - I/O / Lesson Appendix
+
+Java
+
+```
+class Person {
+    String name = "Unknown";
+    Person() { name = "Default"; } // No-arg constructor
+}
+class Employee extends Person implements Serializable {
+    String role;
+    Employee(String r) { role = r; }
+}
+// Assume serialization and deserialization occurs here
+```
+
+**What is the value of `name` after `Employee` is deserialized?**
+
+**A.** `Unknown`
+
+**B.** `Default`
+
+**C.** `null`
+
+**D.** The value it had during serialization.
+
+> [!success] Answer: B (`Default`)
+
+> [!info] Deep Dive
+> 
+> When deserializing an object:
+> 
+> 1. **Serializable Class (`Employee`):** Its constructor is **skipped**. Fields are populated from the byte stream.
+>     
+> 2. **Non-Serializable Parent (`Person`):** Java **MUST** run the no-argument constructor of the first non-serializable parent to initialize inherited fields.
+>     
+> 3. **Execution:** `Person()` constructor runs, setting `name = "Default"`.
+>     
+> 4. _Note:_ If `Person` did not have a no-arg constructor, serialization would fail at runtime with `InvalidClassException`.
+>     
+
+---
+
+### Question 15: Pattern Matching Scope
+
+> [!info] Source
+> 
+> Chapter 2 - Flow Control / Lesson 3
+
+Java
+
+```
+Object o = 5;
+if (!(o instanceof Integer i)) {
+    return;
+}
+System.out.println(i);
+```
+
+**What happens?**
+
+**A.** Prints 5.
+
+**B.** Compilation Error: `i` not in scope.
+
+**C.** Runtime Error.
+
+**D.** Prints `null`.
+
+> [!success] Answer: A (Prints 5)
+
+> [!info] Deep Dive
+> 
+> This is Flow Scoping in Pattern Matching (Java 16+).
+> 
+> 1. **Logic:** The condition is inverted `!`.
+>     
+> 2. **If Block:** If `o` is **NOT** an Integer, we enter the block and `return`.
+>     
+> 3. **After the If:** The compiler knows that if execution reaches `System.out.println(i)`, the condition `!(o instanceof Integer)` must have been false. Therefore, `o instanceof Integer` must be **true**.
+>     
+> 4. **Scope:** Because the compiler guarantees `i` is initialized in this path, `i` is legally in scope and usable.
+>

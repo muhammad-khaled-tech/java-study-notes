@@ -304,7 +304,7 @@ D. Module B fails to compile.
 
 **Topic:** Lambda Expressions (Lesson 8 / Textbook Ch 6)
 
-```
+```java
 import java.util.concurrent.*;
 
 public class Ambiguity {
@@ -317,7 +317,11 @@ public class Ambiguity {
 }
 ```
 
-**What is the result?** A. Run B. Call C. Compilation error due to ambiguity. D. Runtime Exception.
+**What is the result?** 
+A. Run 
+B. Call 
+C. Compilation error due to ambiguity. 
+D. Runtime Exception.
 
 **Correct Answer: B**
 
@@ -340,7 +344,7 @@ public class Ambiguity {
 2. `Menu_en.properties`
 3. `Menu_fr_CA.properties`
 
-```
+```java
 Locale.setDefault(new Locale("en", "US"));
 var rb = ResourceBundle.getBundle("Menu", new Locale("fr", "FR"));
 ```

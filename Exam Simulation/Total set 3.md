@@ -1,8 +1,4 @@
-I apologize sincerely. The standard Markdown line breaks were likely interpreted by your viewer as a single line.
 
-I will now force **double line breaks** (blank lines) between every single option to guarantee they render on separate lines in Obsidian.
-
----
 
 ### Question 1: Switch Expressions & Control Flow
 
@@ -10,9 +6,9 @@ I will now force **double line breaks** (blank lines) between every single optio
 > 
 > Chapter 2 - Controlling Program Flow / Lesson 3
 
-Java
 
-```
+
+```java
 public class SwitchMagic {
     public static void main(String[] args) {
         int k = 10;
@@ -62,9 +58,9 @@ public class SwitchMagic {
 > 
 > Chapter 6 - Streams / Lesson 9
 
-Java
 
-```
+
+```Java
 import java.util.List;
 
 public class OrderChaos {
@@ -112,7 +108,7 @@ public class OrderChaos {
 
 Java
 
-```
+```Java
 public record User(String name) {
     public User {
         if (name == null) throw new IllegalArgumentException();
@@ -154,7 +150,7 @@ public record User(String name) {
 
 Java
 
-```
+```Java
 module com.provider {
     provides com.api.Service with com.impl.ServiceImpl;
     // Line X
@@ -192,7 +188,7 @@ module com.provider {
 
 Java
 
-```
+```Java
 import java.nio.file.*;
 
 public class PathTest {

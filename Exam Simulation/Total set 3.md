@@ -63,7 +63,7 @@ public class StreamPartition {
 ```
 
 **What is the result?**
-A. [Speak, Growl
+A. Speak, Growl
 B. Bark, Meow
 C. null 
 D. Compilation error at Line X.
@@ -83,7 +83,7 @@ D. Compilation error at Line X.
 
 **Topic:** Multi-Threading (Lesson 10 / Textbook Ch 8)
 
-```
+```java
 import java.util.concurrent.atomic.*;
 
 public class AtomicTest {

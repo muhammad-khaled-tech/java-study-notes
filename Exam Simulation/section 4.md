@@ -183,7 +183,11 @@ public class ReduceMath {
 }
 ```
 
-**What is the output?** A. 6 B. 0 C. 1 D. 5
+**What is the output?** 
+A. 6 '
+B. 0 
+C. 1 
+D. 5
 
 ---
 
@@ -210,7 +214,8 @@ public class FlatMapTest {
 }
 ```
 
-**What is the output?** A. 1 B. 2 C. Compilation Error. D. Stream<List>
+**What is the output?** 
+A. 1 B. 2 C. Compilation Error. D. Stream<List>
 
 ---
 

@@ -214,7 +214,9 @@ public class GenericBound {
 
 **What happens when compiling Line X?** 
 A. Compiles successfully. 
-B. Compilation error. C. Compiles but throws ClassCastException at runtime. D. Compiles only if the list passed is `List<Object>`.
+B. Compilation error.
+C. Compiles but throws ClassCastException at runtime. 
+D. Compiles only if the list passed is `List<Object>`.
 
 **Correct Answer: B**
 
@@ -231,7 +233,7 @@ B. Compilation error. C. Compiles but throws ClassCastException at runtime. D. C
 
 **Topic:** JDBC (Lesson Appendix 1 / Textbook Ch 10)
 
-```
+```java
 try (var conn = DriverManager.getConnection("jdbc:derby:zoo");
      var stmt = conn.createStatement();
      var rs = stmt.executeQuery("SELECT count(*) FROM animals")) { // Returns 1 row
@@ -240,7 +242,11 @@ try (var conn = DriverManager.getConnection("jdbc:derby:zoo");
 }
 ```
 
-**What is the result assuming the table exists?** A. Prints the count. B. Prints 0. C. Throws SQLException at runtime. D. Compilation error.
+**What is the result assuming the table exists?** 
+A. Prints the count. 
+B. Prints 0. 
+C. Throws SQLException at runtime.
+D. Compilation error.
 
 **Correct Answer: C**
 
@@ -257,7 +263,7 @@ try (var conn = DriverManager.getConnection("jdbc:derby:zoo");
 
 **File: module-info.java (Module A)**
 
-```
+```java
 module A {
     exports com.a;
 }
@@ -265,7 +271,7 @@ module A {
 
 **File: module-info.java (Module B)**
 
-```
+```java
 module B {
     requires transitive A;
 }
@@ -273,13 +279,17 @@ module B {
 
 **File: module-info.java (Module C)**
 
-```
+```java
 module C {
     requires B;
 }
 ```
 
-**Which statement is true regarding Module C?** A. Module C can access packages in Module A. B. Module C cannot access packages in Module A without explicitly requiring it. C. Module C creates a cyclic dependency. D. Module B fails to compile.
+**Which statement is true regarding Module C?** 
+A. Module C can access packages in Module A. 
+B. Module C cannot access packages in Module A without explicitly requiring it.
+C. Module C creates a cyclic dependency.
+D. Module B fails to compile.
 
 **Correct Answer: A**
 

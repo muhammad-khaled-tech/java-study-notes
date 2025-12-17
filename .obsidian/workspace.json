@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/Section 2.md",
+                "file": "All lectures/Exceptions.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Section 2"
+              "title": "Exceptions"
             }
           }
         ]
@@ -186,6 +186,7 @@
   },
   "active": "16b9fec0a8affcaf",
   "lastOpenFiles": [
+    "Exam Simulation/Section 2.md",
     "Exam Simulation/Section 1.md",
     "Exam Simulation/section 5.md",
     "All lectures/Exceptions.md",
@@ -193,7 +194,6 @@
     "different explanations/Inner Classes.md",
     "Untitled.md",
     "Exam Simulation/Section 3.md",
-    "Exam Simulation/Section 2.md",
     "Exam Simulation",
     "different explanations/Wrapers.md",
     "different explanations/حاجات متفرقة جات على بالي.md",

@@ -125,7 +125,7 @@ C. It could be "1 2 ", "2 1 ", or "2 2 ". D. The code causes a deadlock.
 
 **Topic:** Exception Handling (Lesson 6 / Textbook Ch 4)
 
-```
+```java
 import java.io.*;
 
 class Parent {
@@ -139,7 +139,10 @@ class Child extends Parent {
 }
 ```
 
-**Which method, if inserted into `Child`, will cause a compilation error?** A. `public void read() throws FileNotFoundException {}` B. `public void read() throws Exception {}` C. `public void read() throws RuntimeException {}` D. `public void read() {}`
+**Which method, if inserted into `Child`, will cause a compilation error?** A. `public void read() throws FileNotFoundException {}`
+B. `public void read() throws Exception {}` 
+C. `public void read() throws RuntimeException {}` 
+D. `public void read() {}`
 
 **Correct Answer: B**
 
@@ -159,7 +162,7 @@ class Child extends Parent {
 
 **Topic:** Java I/O API (Lesson Appendix 1 / Textbook Ch 9)
 
-```
+```java
 import java.nio.file.*;
 
 public class PathMath {
@@ -176,7 +179,11 @@ public class PathMath {
 }
 ```
 
-**What is the result?** A. `../docs/resume.txt` B. `../../docs/resume.txt` C. Error D. The code does not compile.
+**What is the result?** 
+A. `../docs/resume.txt` 
+B. `../../docs/resume.txt` 
+C. Error 
+D. The code does not compile.
 
 **Correct Answer: C**
 
@@ -193,7 +200,7 @@ public class PathMath {
 
 **Topic:** Generics (Lesson 7 / Textbook Ch 5)
 
-```
+```java
 import java.util.*;
 
 public class GenericBound {
@@ -205,7 +212,9 @@ public class GenericBound {
 }
 ```
 
-**What happens when compiling Line X?** A. Compiles successfully. B. Compilation error. C. Compiles but throws ClassCastException at runtime. D. Compiles only if the list passed is `List<Object>`.
+**What happens when compiling Line X?** 
+A. Compiles successfully. 
+B. Compilation error. C. Compiles but throws ClassCastException at runtime. D. Compiles only if the list passed is `List<Object>`.
 
 **Correct Answer: B**
 

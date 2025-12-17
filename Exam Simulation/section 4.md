@@ -161,7 +161,11 @@ public class SetTest {
 }
 ```
 
-**What is the result?** A. 2 B. 1 C. Compilation Error. D. Throws `ClassCastException` at runtime.
+**What is the result?** 
+A. 2 
+B. 1 
+C. Compilation Error. 
+D. Throws `ClassCastException` at runtime.
 
 ---
 

@@ -242,7 +242,9 @@ public class PECSTrap {
 
 **What is the result?** 
 A. Compiles and runs 
-B. Compilation Error at initialization C. Compilation Error at `list.add` D. Runtime Exception
+B. Compilation Error at initialization 
+C. Compilation Error at `list.add` 
+D. Runtime Exception
 
 **الإجابة: C (Compilation Error at list.add)**
 
@@ -262,7 +264,11 @@ public class SyntaxTrap {
 }
 ```
 
-**What is the result?** A. Compiles successfully B. Compilation Error: Cannot resolve symbol 'T' C. Compilation Error: Invalid return type D. Warnings only
+**What is the result?**
+A. Compiles successfully 
+B. Compilation Error: Cannot resolve symbol 'T' 
+C. Compilation Error: Invalid return type 
+D. Warnings only
 
 **الإجابة: B (Compilation Error: Cannot resolve symbol 'T')**
 

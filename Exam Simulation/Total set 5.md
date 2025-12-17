@@ -1683,3 +1683,566 @@ System.out.println(list);
 >         
 > - **Result:** `null` comes first, then "A", then "B".
 
+Here is **Exam Set #4** (The "Final Boss" Edition), renumbered starting from **Q36** as a continuation of the previous set, formatted for Obsidian.
+
+---
+
+# 🎓 Java OCP Practice Exam - Set 4 (The Final Boss)
+
+**Tags:** #Java #OCP #PracticeExam #Coding #Architecture
+
+---
+
+### Q36: Advanced Stream Collectors & Grouping
+
+**Topic:** Stream API
+
+Java
+
+```
+import java.util.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.*;
+
+record Transaction(String currency, double value) {}
+
+public class Bank {
+    public static void main(String[] args) {
+        var txs = List.of(
+            new Transaction("USD", 10.0),
+            new Transaction("EUR", 20.0),
+            new Transaction("USD", 30.0)
+        );
+
+        var result = txs.stream().collect(
+            groupingBy(Transaction::currency,
+                mapping(Transaction::value,
+                    collectingAndThen(toList(),
+                        list -> list.get(0) // Line X
+                    )
+                )
+            )
+        );
+        System.out.println(result);
+    }
+}
+```
+
+**What is the result?**
+
+- **A.** {USD=10.0, EUR=20.0}
+    
+- **B.** {USD=[10.0, 30.0], EUR=[20.0]}
+    
+- **C.** {USD=10.0, EUR=20.0} (But guaranteed order is not preserved)
+    
+- **D.** Runtime Exception at Line X.
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: A
+> 
+> Concept: Downstream Collectors & collectingAndThen.
+> 
+> Deep Explanation:
+> 
+> - **`groupingBy`:** Keys are "USD" and "EUR".
+>     
+> - **Downstream 1 (`mapping`):** Extracts the value (`Double`).
+>     
+> - **Downstream 2 (`collectingAndThen`):**
+>     
+>     - First, it collects the values into a List (`toList()`).
+>         
+>     - For USD: `[10.0, 30.0]`.
+>         
+>     - For EUR: `[20.0]`.
+>         
+> - **The Finisher (`list -> list.get(0)`):** It applies this function to the resulting list.
+>     
+>     - For USD: Returns `10.0`.
+>         
+>     - For EUR: Returns `20.0`.
+>         
+> - **Final Map:** `{USD=10.0, EUR=20.0}`.
+>     
+> - **Why it's Right:** `collectingAndThen` allows you to perform a final transformation on the result of a collector.
+>     
+
+---
+
+### Q37: Concurrency & The CopyOnWriteArrayList Iterator
+
+**Topic:** Concurrency
+
+Java
+
+```
+import java.util.concurrent.*;
+
+public class SafeList {
+    public static void main(String[] args) {
+        var list = new CopyOnWriteArrayList<>(java.util.List.of("A", "B", "C"));
+
+        for(String s : list) { // Iterator created here
+            list.add("D");     // Direct modification
+            System.out.print(s);
+        }
+        System.out.print(" Size:" + list.size());
+    }
+}
+```
+
+**What is the output?**
+
+- **A.** ABC Size:3
+    
+- **B.** ABC Size:6
+    
+- **C.** ABCD Size:6
+    
+- **D.** Throws ConcurrentModificationException
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: B
+> 
+> Concept: Snapshot Iterators.
+> 
+> Deep Explanation:
+> 
+> - **The Iterator:** When the enhanced for-loop starts, `CopyOnWriteArrayList` creates an iterator based on a **snapshot** of the underlying array `["A", "B", "C"]`.
+>     
+> - **The Loop:** It iterates exactly 3 times (A, B, C). It does not see the new additions because the iterator is looking at the old array reference.
+>     
+> - **The Modification:** Inside the loop, `list.add("D")` creates a new copy of the internal array, appends "D", and updates the main list reference. This happens 3 times (once for each element).
+>     
+> - **Final State:** The list was modified 3 times, adding "D" thrice.
+>     
+> - **Output:** Prints the snapshot elements "ABC", then the live size (3 original + 3 added = 6).
+>     
+
+---
+
+### Q38: Inner Class Shadowing & this
+
+**Topic:** Inner Classes
+
+Java
+
+```
+public class A {
+    private int x = 10;
+
+    class B {
+        private int x = 20;
+
+        class C {
+            private int x = 30;
+
+            public void print() {
+                System.out.println(x + A.this.x + B.this.x); // Line X
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        new A().new B().new C().print();
+    }
+}
+```
+
+**What is the result?**
+
+- **A.** 60
+    
+- **B.** 90
+    
+- **C.** 40
+    
+- **D.** Compilation Error at Line X.
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: A
+> 
+> Concept: Inner Class Scope & Shadowing.
+> 
+> Deep Explanation:
+> 
+> - `x`: Refers to the variable in the current scope (C), which is 30.
+>     
+> - `B.this.x`: Refers to the enclosing instance of B, which is 20.
+>     
+> - `A.this.x`: Refers to the enclosing instance of A, which is 10.
+>     
+> - **Math:** 30 + 20 + 10 = 60.
+>     
+
+---
+
+### Q39: Path Relativization Edge Cases
+
+**Topic:** NIO.2
+
+Java
+
+```
+Path p1 = Path.of("/a/b");
+Path p2 = Path.of("/a/c");
+Path p3 = Path.of("c");
+
+System.out.print(p1.relativize(p2) + " ");
+System.out.print(p1.relativize(p3)); // Line Y
+```
+
+**What is the result?**
+
+- **A.** ../c ../b/c
+    
+- **B.** ../c followed by an Exception.
+    
+- **C.** b/c followed by an Exception.
+    
+- **D.** ../c followed by ../c
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: B
+> 
+> Concept: Path Relativization Constraints.
+> 
+> Deep Explanation:
+> 
+> - `p1.relativize(p2)`: Both p1 (`/a/b`) and p2 (`/a/c`) are **Absolute** paths.
+>     
+>     - To get from `/a/b` to `/a/c`: Go up one (`..`) to `/a`, then down to `c`. Result: `../c`.
+>         
+> - `p1.relativize(p3)`: p1 is **Absolute**. p3 is **Relative**.
+>     
+> - **The Crash:** Java cannot compute the relative path between an absolute path and a relative path because the relative path relies on an unknown "current directory." It throws `IllegalArgumentException`.
+>     
+
+---
+
+### Q40: Generic Wildcard Capture
+
+**Topic:** Generics
+
+Java
+
+```
+import java.util.*;
+
+public class WildcardSwap {
+    public static void swap(List<?> list) {
+        helper(list);
+    }
+
+    private static <T> void helper(List<T> list) {
+        list.set(0, list.get(0));
+    }
+
+    public static void main(String[] args) {
+        List<String> list = Arrays.asList("A", "B");
+        swap(list);
+        System.out.println(list);
+    }
+}
+```
+
+**What is the result?**
+
+- **A.** [A, B]
+    
+- **B.** Compilation Error at helper(list).
+    
+- **C.** Compilation Error at list.set(...).
+    
+- **D.** Runtime UnsupportedOperationException.
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: A
+> 
+> Concept: Wildcard Capture Helper Pattern.
+> 
+> Deep Explanation:
+> 
+> - **The Problem:** `List<?>` is a list of "unknown" type. You cannot normally call `set()` on it because the compiler doesn't know what type is valid to put in.
+>     
+> - **The Trick:** We pass `List<?>` to a generic helper method `helper(List<T> list)`.
+>     
+> - **Capture:** The compiler captures the wildcard `?` and assigns it a temporary name `T`. Inside `helper`, we have a specific `List<T>`.
+>     
+> - **Operation:** We read `T` (via `get`) and write `T` (via `set`). Since we are writing the exact same type we just read, this is type-safe.
+>     
+> - **Result:** The code compiles and swaps the element with itself (no-op). Output: `[A, B]`.
+>     
+
+---
+
+### Q41: Exceptions & Interface Clashes
+
+**Topic:** Exception Handling
+
+Java
+
+```
+import java.io.*;
+
+interface A {
+    void process() throws IOException;
+}
+interface B {
+    void process() throws FileNotFoundException;
+}
+
+public class C implements A, B {
+    // Line X
+    public void process() {
+        System.out.print("Done");
+    }
+
+    public static void main(String[] args) {
+        new C().process();
+    }
+}
+```
+
+**What happens if we run this code?**
+
+- **A.** Compiles and prints "Done".
+    
+- **B.** Compilation Error: process() must throw IOException.
+    
+- **C.** Compilation Error: process() must throw FileNotFoundException.
+    
+- **D.** Compilation Error: process() cannot handle conflicting throws clauses.
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: A
+> 
+> Concept: Overriding Methods with Exceptions.
+> 
+> Deep Explanation:
+> 
+> - **The Rule:** The overriding method (in class C) must satisfy **BOTH** interfaces.
+>     
+>     - It cannot throw a broader exception than A (must be `IOException` or subclass, or nothing).
+>         
+>     - It cannot throw a broader exception than B (must be `FileNotFoundException` or subclass, or nothing).
+>         
+> - **Intersection:** The only valid checked exception would be the intersection (subclass of both).
+>     
+> - **The Twist:** An overriding method is allowed to throw **NO** exceptions. Dropping the exception satisfies both contracts.
+>     
+
+---
+
+### Q42: Functional Interface Composition
+
+**Topic:** Lambda Expressions
+
+Java
+
+```
+import java.util.function.Function;
+
+public class Composition {
+    public static void main(String[] args) {
+        Function<Integer, Integer> f1 = x -> x + 1;
+        Function<Integer, Integer> f2 = x -> x * 2;
+
+        Function<Integer, Integer> f3 = f1.compose(f2); // Line 1
+        Function<Integer, Integer> f4 = f1.andThen(f2); // Line 2
+
+        System.out.println(f3.apply(3) + " " + f4.apply(3));
+    }
+}
+```
+
+**What is the result?**
+
+- **A.** 7 8
+    
+- **B.** 8 7
+    
+- **C.** 7 7
+    
+- **D.** 8 8
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: A
+> 
+> Concept: compose vs andThen.
+> 
+> Deep Explanation:
+> 
+> - **`f1.compose(f2)`:** Logic is `f1(f2(x))`. "Do f2 first, then f1".
+>     
+>     - Input 3 -> f2 (3 * 2 = 6) -> f1 (6 + 1 = 7). **Result: 7**.
+>         
+> - **`f1.andThen(f2)`:** Logic is `f2(f1(x))`. "Do f1 first, then f2".
+>     
+>     - Input 3 -> f1 (3 + 1 = 4) -> f2 (4 * 2 = 8). **Result: 8**.
+>         
+
+---
+
+### Q43: Record Constructors & Validation
+
+**Topic:** Records
+
+Java
+
+```
+record Range(int start, int end) {
+    public Range {
+        if (end < start) throw new IllegalArgumentException();
+        start = start + 10; // Line 1
+    }
+}
+
+public class RecordTest {
+    public static void main(String[] args) {
+        var r = new Range(0, 10);
+        System.out.println(r.start());
+    }
+}
+```
+
+**What is the output?**
+
+- **A.** 0
+    
+- **B.** 10
+    
+- **C.** Compilation Error at Line 1 (Records are immutable).
+    
+- **D.** Runtime Exception.
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: B
+> 
+> Concept: Compact Constructors in Records.
+> 
+> Deep Explanation:
+> 
+> - **Compact Constructor:** Does not take parameters (`int start`, `int end`). It runs **before** the fields are assigned.
+>     
+> - **Parameter Modification:** `start` refers to the constructor parameter, not the field `this.start`.
+>     
+> - **Line 1:** `start = start + 10` modifies the parameter value to 10.
+>     
+> - **Implicit Assignment:** After the compact constructor finishes, Java automatically performs `this.start = start` (using the modified value).
+>     
+> - **Result:** The stored field value becomes 10.
+>     
+
+---
+
+### Q44: JDBC & ResultSet Scrolling
+
+**Topic:** JDBC
+
+Java
+
+```
+// Assume table 'Rows' has 2 rows.
+Statement stmt = conn.createStatement(
+    ResultSet.TYPE_SCROLL_INSENSITIVE,
+    ResultSet.CONCUR_READ_ONLY);
+ResultSet rs = stmt.executeQuery("SELECT * FROM Rows");
+
+rs.afterLast();
+rs.previous();
+System.out.print(rs.getRow()); // Line 1
+rs.relative(-1);
+System.out.print(rs.getRow()); // Line 2
+```
+
+**What is printed?**
+
+- **A.** 21
+    
+- **B.** 20
+    
+- **C.** 00
+    
+- **D.** Throws SQLException because relative is not supported.
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: A
+> 
+> Concept: ResultSet Scrolling.
+> 
+> Deep Explanation:
+> 
+> - **`rs.afterLast()`:** Cursor moves to after the last row (Position 3 conceptually).
+>     
+> - **`rs.previous()`:** Moves back one step. Cursor is now at Row 2 (the last row).
+>     
+>     - **Line 1:** `getRow()` returns 2.
+>         
+> - **`rs.relative(-1)`:** Moves backwards 1 step from current position. 2 - 1 = 1. Cursor is now at Row 1.
+>     
+>     - **Line 2:** `getRow()` returns 1.
+>         
+
+---
+
+### Q45: Modules & Reflection Access
+
+**Topic:** Modules
+
+Java
+
+```
+// File module-info.java:
+module com.security {
+    exports com.api;
+    opens com.internal to com.test;
+}
+```
+
+Scenario: Code in module com.test tries to use Deep Reflection (setAccessible(true)) on a private field in package com.internal.
+
+What is the outcome?
+
+- **A.** Success.
+    
+- **B.** IllegalAccessException (Reflection not allowed).
+    
+- **C.** InaccessibleObjectException (Module encapsulation).
+    
+- **D.** Compilation Error in module-info.java.
+    
+
+> [!SUCCESS]- Click to reveal answer
+> 
+> Correct Answer: A
+> 
+> Concept: The opens directive.
+> 
+> Deep Explanation:
+> 
+> - **`exports`:** Allows public access to public members at compile/runtime. Does **NOT** allow Deep Reflection (accessing private members).
+>     
+> - **`opens`:** Specifically designed for Reflection frameworks (like Spring, Hibernate, JUnit). It allows other modules to use Reflection to access private members.
+>     
+> - **Targeted Open:** `opens ... to com.test` means only the `com.test` module can reflectively access private members of `com.internal`.
+>

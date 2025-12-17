@@ -132,7 +132,7 @@ class MyCalc implements Calculator {
 
 **(Source: Lesson 5 - Part 2)**
 
-```
+```java
 public class UnboxCheck {
     public static void main(String[] args) {
         Integer val = null;

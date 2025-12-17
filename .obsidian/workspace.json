@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/Section 2.md",
+                "file": "Exam Simulation/Total set 5.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Section 2"
+              "title": "Total set 5"
             }
           }
         ],
@@ -212,6 +212,7 @@
   },
   "active": "7275430b15cc0a70",
   "lastOpenFiles": [
+    "Exam Simulation/Section 2.md",
     "Exam Simulation/Section 1.md",
     "Exam Simulation/Total set 5.md",
     "Exam Simulation/Total set 4.md",
@@ -227,7 +228,6 @@
     "All lectures/Wrapper Classes & inner classes.md",
     "All lectures/Exceptions.md",
     "All lectures/Generics and Lambda Expressions and Method Reference.md",
-    "Exam Simulation/Section 2.md",
     "Exam Simulation/Section 3.md",
     "Exam Simulation/section 4.md",
     "Exam Simulation/section 5.md",

@@ -369,18 +369,3 @@ list.removeIf(s -> s.equals("B"));
 
 ---
 
-> [!summary]  
-> ✔ Final Boss Level  
-> ✔ Obsidian-ready  
-> ✔ OCP + Interview-grade
-> 
-> لو حابب بعد كده:
-> 
-> - ☠️ **Set 6 (Insane Mode)**
->     
-> - 🧠 **OCP Notes distilled**
->     
-> - 📘 **Mistakes That Fail Seniors**
->     
-> 
-> قولّي 👊

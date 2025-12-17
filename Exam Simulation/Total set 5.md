@@ -336,7 +336,7 @@ public class MapMerge {
 
 Java
 
-```
+```Java
 import java.util.stream.Stream;
 
 public class StreamLogic {
@@ -386,7 +386,7 @@ public class StreamLogic {
 
 Java
 
-```
+```Java
 interface Machine {
     static void start() {
         System.out.print("Machine");
@@ -438,7 +438,7 @@ class Robot implements Machine {
 
 Java
 
-```
+```Java
 public class Counter {
     public static synchronized void printA() {
         System.out.print("A");
@@ -488,7 +488,7 @@ public class Counter {
 
 Java
 
-```
+```Java
 import java.io.*;
 
 class Parent {

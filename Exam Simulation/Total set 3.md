@@ -349,7 +349,11 @@ Locale.setDefault(new Locale("en", "US"));
 var rb = ResourceBundle.getBundle("Menu", new Locale("fr", "FR"));
 ```
 
-**Which file is loaded?** A. `Menu_fr_CA.properties` B. `Menu_en.properties` C. `Menu.properties` D. Throws MissingResourceException
+**Which file is loaded?** 
+A. `Menu_fr_CA.properties`
+B. `Menu_en.properties` 
+C. `Menu.properties` 
+D. Throws MissingResourceException
 
 **Correct Answer: B**
 

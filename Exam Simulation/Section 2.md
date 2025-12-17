@@ -42,7 +42,10 @@ class ConsolePrinter implements Printer {
 ```
 
 **Which lines cause a Compilation Error?** 
-**A.** Only `Printer.print()` **B.** Only `print()` and `new ConsolePrinter().print()` **C.** All three lines. **D.** None, it prints "InterfaceInterfaceInterface".
+**A.** Only `Printer.print()` **
+B.** Only `print()` and `new ConsolePrinter().print()` 
+**C.** All three lines. 
+**D.** None, it prints "InterfaceInterfaceInterface".
 
 **الإجابة: B (Only `print()` and `new ConsolePrinter().print()`)**
 
@@ -63,7 +66,11 @@ abstract class Athlete implements Runner {
 }
 ```
 
-**What happens when compiling this code?** **A.** Compiles successfully. **B.** Compilation Error: Abstract classes cannot implement interfaces. **C.** Compilation Error: `run()` reduces visibility from public to protected. **D.** Compilation Error: Abstract class must declare `run()` as abstract.
+**What happens when compiling this code?**
+**A.** Compiles successfully. 
+**B.** Compilation Error: Abstract classes cannot implement interfaces. 
+**C.** Compilation Error: `run()` reduces visibility from public to protected. 
+**D.** Compilation Error: Abstract class must declare `run()` as abstract.
 
 **الإجابة: C (Compilation Error: `run()` reduces visibility)**
 
@@ -81,7 +88,11 @@ interface B { default void hello() { System.out.print("B"); } }
 class C implements A, B { }
 ```
 
-**What happens when compiling class C?** **A.** Compiles and `new C().hello()` prints "A". **B.** Compiles and `new C().hello()` prints "B". **C.** Compilation Error: C inherits unrelated defaults for hello(). **D.** Runtime Exception: Ambiguous method call.
+**What happens when compiling class C?** 
+**A.** Compiles and `new C().hello()` prints "A". 
+**B.** Compiles and `new C().hello()` prints "B". 
+**C.** Compilation Error: C inherits unrelated defaults for hello(). 
+**D.** Runtime Exception: Ambiguous method call.
 
 **الإجابة: C (Compilation Error)**
 
@@ -103,7 +114,11 @@ class MyCalc implements Calculator {
 }
 ```
 
-**What is the result?** **A.** Compiles and prints 5. **B.** Compilation Error: Private methods cannot be static. **C.** Compilation Error: `helper()` has private access in Calculator. **D.** Runtime Exception.
+**What is the result?** 
+**A.** Compiles and prints 5. 
+**B.** Compilation Error: Private methods cannot be static.
+**C.** Compilation Error: `helper()` has private access in Calculator. 
+**D.** Runtime Exception.
 
 **الإجابة: C (Compilation Error)**
 
@@ -127,7 +142,11 @@ public class UnboxCheck {
 }
 ```
 
-**What happens at runtime?** **A.** Prints "Positive/Zero" **B.** Prints "Negative" **C.** Throws `NullPointerException` **D.** Compilation Error: Incompatible types.
+**What happens at runtime?** 
+**A.** Prints "Positive/Zero" 
+**B.** Prints "Negative" 
+**C.** Throws `NullPointerException` 
+**D.** Compilation Error: Incompatible types.
 
 **الإجابة: C (Throws `NullPointerException`)**
 
@@ -149,7 +168,8 @@ public class CacheTrap {
 }
 ```
 
-**What is the output?** **A.** true true **B.** false false **C.** true false **D.** false true
+**What is the output?** 
+**A.** true true **B.** false false **C.** true false **D.** false true
 
 **الإجابة: C (true false)**
 

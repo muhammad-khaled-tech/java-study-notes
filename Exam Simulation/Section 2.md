@@ -42,8 +42,8 @@ class ConsolePrinter implements Printer {
 ```
 
 **Which lines cause a Compilation Error?** 
-**A.** Only `Printer.print()` **
-B.** Only `print()` and `new ConsolePrinter().print()` 
+**A.** Only `Printer.print()` 
+B.Only `print()` and `new ConsolePrinter().print()` 
 **C.** All three lines. 
 **D.** None, it prints "InterfaceInterfaceInterface".
 
@@ -57,7 +57,7 @@ B.** Only `print()` and `new ConsolePrinter().print()`
 
 **(Source: Lesson 4 - Part 3)**
 
-```
+```java
 interface Runner {
     void run();
 }

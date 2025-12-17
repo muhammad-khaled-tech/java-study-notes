@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/Total set 2.md",
+                "file": "All lectures/Stream API.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Total set 2"
+              "title": "Stream API"
             }
           }
         ],
@@ -212,8 +212,8 @@
   },
   "active": "de2c7aea57b8fed9",
   "lastOpenFiles": [
-    "Exam Simulation/Total set 1.md",
     "Exam Simulation/Total set 2.md",
+    "Exam Simulation/Total set 1.md",
     "All lectures/Stream API.md",
     "Exam Simulation/Section 1.md",
     "All lectures/Java collections.md",

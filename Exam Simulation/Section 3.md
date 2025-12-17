@@ -291,7 +291,8 @@ interface SmartFunction {
 }
 ```
 
-**What is the result of compiling this interface?** A. Compilation Error: Multiple abstract methods B. Compilation Error: toString/equals cannot be abstract C. Compiles successfully D. Compilation Error: Missing default implementation
+**What is the result of compiling this interface?**
+A. Compilation Error: Multiple abstract methods B. Compilation Error: toString/equals cannot be abstract C. Compiles successfully D. Compilation Error: Missing default implementation
 
 **الإجابة: C (Compiles successfully)**
 

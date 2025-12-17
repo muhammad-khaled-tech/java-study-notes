@@ -28,7 +28,7 @@ interface Secrets {
 
 **(Source: Lesson 4 - Part 5)**
 
-```
+```java
 interface Printer {
     static void print() { System.out.print("Interface"); }
 }

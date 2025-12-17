@@ -1682,4 +1682,4 @@ System.out.println(list);
 >     2. If both are non-null, it delegates to the wrapped comparator (`naturalOrder` -> alphabetical).
 >         
 > - **Result:** `null` comes first, then "A", then "B".
->
+

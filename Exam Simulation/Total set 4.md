@@ -1,4 +1,8 @@
+Here is **Exam Set #2**. This set focuses on **Strings/StringBuilder, Access Modifiers, Inner Classes, Collections, Streams, Exceptions, Generics, and Concurrency**.
 
+These questions are designed to test edge cases found in the **Boyarsky/Selikoff Textbook** while adhering to the syllabus structure outlined in your **Slides**.
+
+---
 
 # Part 1: The Questions
 

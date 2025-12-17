@@ -4,7 +4,7 @@
 
 **(Source: Lesson 4 - Part 3)**
 
-```
+```java
 interface Secrets {
     int CODE = 123;
     protected void reveal();

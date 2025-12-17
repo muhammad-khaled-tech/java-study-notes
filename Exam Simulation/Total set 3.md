@@ -1,671 +1,338 @@
 
 
-### Question 1: Switch Expressions & Control Flow
+### Question 1: Inner Classes & Variable Capture
 
-> [!info] Source
-> 
-> Chapter 2 - Controlling Program Flow / Lesson 3
-
-
+**Topic:** Inner Classes (Lesson 5 / Textbook Ch 3)
 
 ```java
-public class SwitchMagic {
+public class Outer {
+    private int x = 24;
+
+    public int getX() {
+        String message = "x is ";
+        class Inner {
+            private int x = 55;
+            public void printX() {
+                System.out.println(message + x);
+            }
+        }
+        message = "X is "; // Line A
+        var in = new Inner();
+        in.printX();
+        return x;
+    }
+
     public static void main(String[] args) {
-        int k = 10;
-        var result = switch(k) {
-            case 10 -> {
-                System.out.print("A");
-                yield 100;
-            }
-            default -> {
-                System.out.print("B");
-                return 0;
-            }
-        };
-        System.out.print(result);
+        new Outer().getX();
+    }
+}
+```
+
+**What is the result?** 
+A. x is 55 
+B. X is 55
+C. x is 24 
+D. Compilation error at Line A.
+
+**Correct Answer: D**
+
+- **Concept:** Local Inner Classes & "Effectively Final" Variables.
+- **Deep Explanation:** Local inner classes (classes defined inside a method) can access local variables of the enclosing method only if those variables are **final** or **effectively final**. "Effectively final" means the variable is assigned a value once and never modified.
+- **Why it's Right:** Inside the `Inner` class, the code references the local variable `message`. However, at **Line A**, `message` is reassigned (`message = "X is ";`). This reassignment breaks the "effectively final" status of the variable. Therefore, the compiler throws an error at the point where `message` is referenced inside the inner class (or at the assignment, depending on the compiler), stating that variables accessed from an inner class must be final or effectively final.
+- **Why Others are Wrong:** Options A, B, and C assume the code compiles. It does not because the local variable `message` is modified after initialization, violating the capture rule for local inner classes.
+
+---
+
+### Question 2: Stream Collectors (Partitioning vs Grouping)
+
+**Topic:** Streams (Lesson 8 / Textbook Ch 6)
+
+```java
+import java.util.*;
+import java.util.stream.*;
+
+public class StreamPartition {
+    public static void main(String[] args) {
+        Stream<String> s = Stream.of("Speak", "Bark", "Meow", "Growl");
+        Map<Boolean, List<String>> map = s.collect(
+            Collectors.partitioningBy(b -> b.length() > 4)
+        );
+        System.out.println(map.get("true")); // Line X
     }
 }
 ```
 
 **What is the result?**
+A. [Speak, Growl
+B. Bark, Meow
+C. null 
+D. Compilation error at Line X.
 
-**A.** A100
+**Correct Answer: C**
 
-**B.** B0
-
-**C.** Compilation Error: `return` not allowed.
-
-**D.** Compilation Error: `yield` not allowed.
-
-> [!success] Answer: C (Compilation Error: `return` not allowed)
-
-> [!info] Deep Dive
-> 
-> In a Switch Expression (a switch that returns a value), you act within a specific scope to compute a result for that variable.
-> 
-> 1. **`yield` Statement:** This is the correct way to return a value from a block (`{...}`) inside a switch expression. It terminates the switch expression, not the method.
->     
-> 2. **`return` Statement:** This attempts to terminate the **entire method** (`main`). However, because the switch expression must resolve to a value to be assigned to `result`, putting a `return` statement creates a conflict. The compiler expects a value for `result` in all branches (via `yield` or a direct arrow `-> value`). A `return` leaves `result` undefined.
->     
-> 3. **Correction:** The `default` block should use `yield 0;` instead of `return 0;`.
->     
+- **Concept:** `Collectors.partitioningBy` Return Type.
+- **Deep Explanation:** The `partitioningBy` collector always returns a `Map<Boolean, List<T>>`. The keys in this map are strictly of type `Boolean` (`true` and `false`).
+- **Why it's Right:** On **Line X**, the code calls `map.get("true")`. The argument `"true"` is a **String**. While `Map.get(Object key)` accepts any object type, the map contains `Boolean` keys, not `String` keys. Therefore, looking up the _String_ `"true"` will not match the _Boolean_ `true`. The map returns `null`.
+- **Why Others are Wrong:**
+    - A would be correct if `map.get(true)` (boolean) was called.
+    - D is incorrect because `Map.get` accepts `Object`, so passing a String is syntactically legal, just logically incorrect for this specific map.
 
 ---
 
-### Question 2: Parallel Stream Reduction & Ordering
+### Question 3: Concurrency & Atomic Operations
 
-> [!info] Source
-> 
-> Chapter 6 - Streams / Lesson 9
+**Topic:** Multi-Threading (Lesson 10 / Textbook Ch 8)
 
+```
+import java.util.concurrent.atomic.*;
 
+public class AtomicTest {
+    private static AtomicInteger count = new AtomicInteger(0);
 
-```Java
-import java.util.List;
-
-public class OrderChaos {
     public static void main(String[] args) {
-        List<Integer> data = List.of(1, 2, 3, 4, 5);
-        int val = data.parallelStream()
-            .reduce(0, (a, b) -> a - b);
-        System.out.println(val);
+        Runnable r = () -> {
+            count.getAndIncrement(); // Op 1
+            int c = count.get();     // Op 2
+            System.out.print(c + " ");
+        };
+        new Thread(r).start();
+        new Thread(r).start();
     }
 }
 ```
 
-**What is the output?**
+**Which statement is true regarding the output?** A. It will always be "1 2 ". B. It will always be "1 1 ". C. It could be "1 2 ", "2 1 ", or "2 2 ". D. The code causes a deadlock.
 
-**A.** -15
+**Correct Answer: C**
 
-**B.** 15
-
-**C.** -5
-
-**D.** The output is unpredictable.
-
-> [!success] Answer: D (The output is unpredictable)
-
-> [!info] Deep Dive
-> 
-> The reduce operation requires the accumulator function to be Associative.
-> 
-> 1. **Associativity Rule:** `(a op b) op c` must equal `a op (b op c)`.
->     
-> 2. **Subtraction:** Subtraction is **NOT** associative. `(1 - 2) - 3 = -4`, but `1 - (2 - 3) = 2`.
->     
-> 3. **Parallel Execution:** The framework splits the data into chunks. Thread A might compute `1-2`, Thread B might compute `3-4`. The order in which these partial results are combined is non-deterministic in parallel streams.
->     
-> 4. **Result:** You might get `-15`, `-5`, or other values depending on how the Fork/Join pool splits the task.
->     
+- **Concept:** Thread Safety & Atomicity.
+- **Deep Explanation:** While `AtomicInteger` methods like `getAndIncrement()` are atomic individually, the **sequence of operations** inside the `run()` method is NOT atomic.
+    - Thread A could execute `getAndIncrement()` (count becomes 1).
+    - Thread B could execute `getAndIncrement()` (count becomes 2).
+    - Thread A resumes and executes `count.get()`, reading 2.
+    - Thread B executes `count.get()`, reading 2.
+    - Output: "2 2 ".
+    - Other interleavings allow "1 2 " or "2 1 ".
+- **Why it's Right:** There is a race condition between `Op 1` and `Op 2`. Reading the value after incrementing it, without synchronization block, allows other threads to intervene.
+- **Why Others are Wrong:** A assumes sequential execution. D is incorrect as there are no locks causing a cyclic wait.
 
 ---
 
-### Question 3: Records & Compact Constructors
+### Question 4: Exceptions & Overriding
 
-> [!info] Source
-> 
-> Chapter 3 - Object-Oriented Approach / Lesson 5
+**Topic:** Exception Handling (Lesson 6 / Textbook Ch 4)
 
-Java
+```
+import java.io.*;
 
-```Java
-public record User(String name) {
-    public User {
-        if (name == null) throw new IllegalArgumentException();
-        this.name = name.toUpperCase(); // Line X
+class Parent {
+    public void read() throws IOException {
+        throw new IOException();
     }
 }
-```
 
-**What occurs when compiling this record?**
-
-**A.** Compiles successfully.
-
-**B.** Compilation Error at Line X: Cannot assign to final field.
-
-**C.** Compilation Error at Line X: Name clash.
-
-**D.** Runtime Exception.
-
-> [!success] Answer: B (Compilation Error at Line X)
-
-> [!info] Deep Dive
-> 
-> This is a strict rule regarding Compact Constructors in Records.
-> 
-> 1. **Implicit Assignment:** The compact constructor (which has no parameters `()`) runs **before** the implicit assignment of fields happens.
->     
-> 2. **The Error:** By writing `this.name = ...`, you are trying to assign the final field manually. However, Java will automatically assign the field _after_ your constructor block finishes. This would result in a "double assignment" of a final variable, which is illegal.
->     
-> 3. **The Fix:** Modify the parameter directly: `name = name.toUpperCase();`. Java will then use this modified parameter to assign the field automatically.
->     
-
----
-
-### Question 4: Module Service Directives
-
-> [!info] Source
-> 
-> Chapter 7 - Modules / Lesson 4
-
-Java
-
-```Java
-module com.provider {
-    provides com.api.Service with com.impl.ServiceImpl;
-    // Line X
+class Child extends Parent {
+    // Insert method here
 }
 ```
 
-**Which directive is required at Line X to allow consumers to use the `ServiceImpl` class via Reflection?**
+**Which method, if inserted into `Child`, will cause a compilation error?** A. `public void read() throws FileNotFoundException {}` B. `public void read() throws Exception {}` C. `public void read() throws RuntimeException {}` D. `public void read() {}`
 
-**A.** `exports com.impl;`
+**Correct Answer: B**
 
-**B.** `opens com.impl;`
-
-**C.** `requires transitive com.impl;`
-
-**D.** `uses com.impl.ServiceImpl;`
-
-> [!success] Answer: B (`opens com.impl;`)
-
-> [!info] Deep Dive
-> 
-> 1. **`exports`:** Makes the public API of a package visible to other modules for compile-time and run-time use. It does **not** allow "Deep Reflection" (accessing private members via `setAccessible(true)`).
->     
-> 2. **`opens`:** This is the specific directive for **Reflection**. It allows other modules (like Spring or Hibernate) to reflectively access classes in the package, including private members, even if the package is not exported for general use.
->     
-> 3. **`provides`:** Declares that this module offers a service implementation, but doesn't open it for reflection.
->     
+- **Concept:** Overriding Methods & Exception Rules.
+- **Deep Explanation:** When overriding a method, the subclass method **cannot** throw a checked exception that is new or broader than the checked exception declared in the parent class.
+    - Parent throws `IOException`.
+    - `Exception` is a **superclass** (broader) of `IOException`. This is forbidden.
+- **Why it's Right:** Option B declares `throws Exception`. Since `Exception` is checked and broader than `IOException`, it violates the overriding rule.
+- **Why Others are Wrong:**
+    - A is valid because `FileNotFoundException` is a _subclass_ of `IOException`.
+    - C is valid because `RuntimeException` is unchecked and can be thrown by any method regardless of overrides.
+    - D is valid because an overriding method can choose to throw _no_ exceptions.
 
 ---
 
-### Question 5: NIO.2 Path Relativization
+### Question 5: NIO.2 Path Relativize
 
-> [!info] Source
-> 
-> Chapter 9 - I/O / Lesson Appendix
+**Topic:** Java I/O API (Lesson Appendix 1 / Textbook Ch 9)
 
-Java
-
-```Java
+```
 import java.nio.file.*;
 
-public class PathTest {
+public class PathMath {
     public static void main(String[] args) {
-        Path p1 = Path.of("/a/b");
-        Path p2 = Path.of("/a/b/c/d");
-        System.out.println(p1.relativize(p2));
-    }
-}
-```
+        Path p1 = Paths.get("/home/user/music");
+        Path p2 = Paths.get("docs/resume.txt");
 
-**What is the output?**
-
-**A.** `../..`
-
-**B.** `c/d`
-
-**C.** `/c/d`
-
-**D.** `d/c`
-
-> [!success] Answer: B (`c/d`)
-
-> [!info] Deep Dive
-> 
-> relativize(p2) answers the question: "How do I get to p2 from p1?"
-> 
-> 1. **Common Root:** Both start at `/a/b`.
->     
-> 2. **The Difference:** To go from `/a/b` to `/a/b/c/d`, you simply need to go down into `c` and then `d`.
->     
-> 3. **Result:** `c/d`.
->     
-> 4. _Note:_ If the question was `p2.relativize(p1)`, the answer would be `../..` (go up two levels).
->     
-
----
-
-### Question 6: JDBC ResultSet Type Scroll Sensitivity
-
-> [!info] Source
-> 
-> Chapter 10 - JDBC / Lesson Appendix
-
-Java
-
-```
-Statement stmt = conn.createStatement(
-    ResultSet.TYPE_SCROLL_SENSITIVE,
-    ResultSet.CONCUR_UPDATABLE);
-ResultSet rs = stmt.executeQuery("SELECT * FROM Inventory");
-rs.next();
-// External update happens here modifying the current row in DB
-System.out.println(rs.getString("qty"));
-```
-
-**If an external process modifies the 'qty' of the current row while the ResultSet is open, what happens?**
-
-**A.** The new value is printed.
-
-**B.** The old value is printed.
-
-**C.** A `SQLException` is thrown.
-
-**D.** The behavior is undefined.
-
-> [!success] Answer: A (The new value is printed)
-
-> [!info] Deep Dive
-> 
-> The key lies in ResultSet.TYPE_SCROLL_SENSITIVE.
-> 
-> 1. **`INSENSITIVE`:** The ResultSet takes a snapshot of the data. Changes made by others are **not** visible.
->     
-> 2. **`SENSITIVE`:** The ResultSet maintains a live link (or refreshes frequently). Changes made to the database by other transactions **are visible** to the current ResultSet cursor.
->     
-> 3. Since it is `SENSITIVE`, Java fetches the latest data, reflecting the external update.
->     
-
----
-
-### Question 7: Map.merge Functionality
-
-> [!info] Source
-> 
-> Chapter 5 - Collections / Lesson 9
-
-Java
-
-```
-import java.util.*;
-public class MergeMap {
-    public static void main(String[] args) {
-        Map<String, String> map = new HashMap<>();
-        map.put("msg", "Hello");
-        map.merge("msg", "World", (oldVal, newVal) -> null);
-        System.out.println(map.get("msg"));
-    }
-}
-```
-
-**What is the output?**
-
-**A.** `Hello`
-
-**B.** `World`
-
-**C.** `HelloWorld`
-
-**D.** `null`
-
-> [!success] Answer: D (`null`)
-
-> [!info] Deep Dive
-> 
-> The merge method has specific logic for removal:
-> 
-> 1. It checks if the key exists. Here, "msg" exists with "Hello".
->     
-> 2. It applies the remapping function: `(old, new) -> null`.
->     
-> 3. **Crucial Rule:** If the remapping function returns `null`, the `merge` method **removes** the key from the map entirely.
->     
-> 4. `map.get("msg")` returns `null` because the key is no longer in the map.
->     
-
----
-
-### Question 8: Atomic Operations & Race Conditions
-
-> [!info] Source
-> 
-> Chapter 8 - Concurrency / Lesson 10
-
-Java
-
-```
-AtomicInteger count = new AtomicInteger(0);
-// In concurrent threads:
-if (count.get() < 10) {
-    count.incrementAndGet();
-}
-```
-
-**Is this code thread-safe?**
-
-**A.** Yes, because `AtomicInteger` methods are atomic.
-
-**B.** No, because there is a "Check-Then-Act" race condition.
-
-**C.** Yes, because `get()` creates a memory barrier.
-
-**D.** No, because `incrementAndGet` is not synchronized.
-
-> [!success] Answer: B (No, "Check-Then-Act" race condition)
-
-> [!info] Deep Dive
-> 
-> Although count.get() and count.incrementAndGet() are individually atomic, the block of logic is not.
-> 
-> 1. **Thread A** reads `count` as 9 (Logic: 9 < 10 is True).
->     
-> 2. **Context Switch** happens.
->     
-> 3. **Thread B** reads `count` as 9 (Logic: 9 < 10 is True).
->     
-> 4. **Thread B** increments `count` to 10.
->     
-> 5. **Thread A** resumes. It already decided to enter the block. It increments `count` to 11.
->     
-> 6. **Result:** The limit of 10 was breached. To fix this, you would need a loop with `compareAndSet`.
->     
-
----
-
-### Question 9: Generics & Array Creation
-
-> [!info] Source
-> 
-> Lesson 7 - Generics
-
-Java
-
-```
-public class GenericArray<T> {
-    public void create() {
-        T[] array = new T; // Line X
-    }
-}
-```
-
-**What happens at Line X?**
-
-**A.** Compiles successfully.
-
-**B.** Compilation Error: Generic array creation.
-
-**C.** Runtime ClassCastException.
-
-**D.** Creates an array of Objects.
-
-> [!success] Answer: B (Compilation Error: Generic array creation)
-
-> [!info] Deep Dive
-> 
-> Java strictly forbids creating arrays of a generic type parameter (new T[]).
-> 
-> 1. **Type Erasure:** At runtime, `T` is erased to `Object`.
->     
-> 2. **Heap Pollution:** If Java allowed `new T`, it would effectively create `new Object`. If you passed this array to code expecting `String[]`, it would crash at runtime only when accessed, breaking the type-safety guarantee of Generics.
->     
-> 3. **Workaround:** You must create `new Object` and cast it `(T[])`, or pass a `Class<T>` literal to perform reflection-based creation (`Array.newInstance`).
->     
-
----
-
-### Question 10: try-with-resources & Suppression
-
-> [!info] Source
-> 
-> Chapter 4 - Exceptions / Lesson 6
-
-Java
-
-```
-class Door implements AutoCloseable {
-    public void close() { throw new RuntimeException("Shell"); }
-}
-public class House {
-    public static void main(String[] args) {
-        try (Door d = new Door()) {
-            throw new RuntimeException("Room");
-        } catch (Exception e) {
-            System.out.print(e.getMessage() + " " + e.getSuppressed().getMessage());
+        try {
+            System.out.println(p1.relativize(p2));
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error");
         }
     }
 }
 ```
 
-**What is the output?**
+**What is the result?** A. `../docs/resume.txt` B. `../../docs/resume.txt` C. Error D. The code does not compile.
 
-**A.** `Shell Room`
+**Correct Answer: C**
 
-**B.** `Room Shell`
-
-**C.** `Room`
-
-**D.** `Shell`
-
-> [!success] Answer: B (`Room Shell`)
-
-> [!info] Deep Dive
-> 
-> 1. **Primary Exception:** The logic inside the `try` block throws "Room". This is the main exception.
->     
-> 2. **Automatic Closing:** Java attempts to close the resource `Door`.
->     
-> 3. **Secondary Exception:** The `close()` method throws "Shell".
->     
-> 4. **Suppression:** Since an exception ("Room") is already flying, Java **suppresses** the "Shell" exception and attaches it to the "Room" exception.
->     
-> 5. **Output:** `e.getMessage()` is "Room". `e.getSuppressed().getMessage()` is "Shell".
->     
+- **Concept:** Path Relativization Constraints.
+- **Deep Explanation:** The `relativize()` method constructs a path from one location to another. However, **both paths must be of the same type** (both absolute or both relative).
+    - `p1` starts with `/`, so it is **absolute**.
+    - `p2` does not start with `/`, so it is **relative**.
+- **Why it's Right:** Attempting to relativize a relative path against an absolute path (or vice versa) throws an `IllegalArgumentException` at runtime. The `catch` block catches this and prints "Error".
+- **Why Others are Wrong:** A and B assume the method works; D is incorrect because the code is syntactically valid.
 
 ---
 
-### Question 11: DateTimeFormatter & Literals
+### Question 6: Generics & Lower Bounds
 
-> [!info] Source
-> 
-> Chapter 1 - Date/Time / Lesson Appendix
-
-Java
+**Topic:** Generics (Lesson 7 / Textbook Ch 5)
 
 ```
-LocalDateTime dt = LocalDateTime.of(2022, 10, 20, 15, 30);
-var f = DateTimeFormatter.ofPattern("MMMM' at 'h' o''clock'");
-System.out.println(f.format(dt));
-```
+import java.util.*;
 
-**What is the output?**
-
-**A.** October at 3 o'clock
-
-**B.** October at 3 o''clock
-
-**C.** October at 3 o clock
-
-**D.** Runtime Exception: Invalid pattern.
-
-> [!success] Answer: A (October at 3 o'clock)
-
-> [!info] Deep Dive
-> 
-> In DateTimeFormatter patterns:
-> 
-> 1. **Single Quotes (`'`):** Used to escape text. `' at '` outputs the literal string " at ".
->     
-> 2. **Double Single Quote (`''`):** This is the escape sequence for a single quote itself. `o''clock` results in the literal text "o'clock".
->     
-> 3. **Result:** "MMMM" (Full Month) + " at " + "h" (12-hour format) + " o'clock" = October at 3 o'clock.
->     
-
----
-
-### Question 12: Stream API - groupingBy & Mapping
-
-> [!info] Source
-> 
-> Chapter 6 - Streams / Lesson 9
-
-Java
-
-```
-Stream<String> s = Stream.of("Apple", "Banana", "Apricot");
-var map = s.collect(Collectors.groupingBy(
-    str -> str.charAt(0),
-    Collectors.mapping(String::toUpperCase, Collectors.toList())
-));
-System.out.println(map);
-```
-
-**What is the content of the map?**
-
-**A.** `{A=[Apple, Apricot], B=[Banana]}`
-
-**B.** `{A=[APPLE, APRICOT], B=[BANANA]}`
-
-**C.** `{65=[APPLE, APRICOT], 66=[BANANA]}`
-
-**D.** Compilation Error.
-
-> [!success] Answer: B (`{A=[APPLE, APRICOT], B=[BANANA]}`)
-
-> [!info] Deep Dive
-> 
-> This uses a Downstream Collector.
-> 
-> 1. **First Argument (Classifier):** Groups by the first char (`'A'`, `'B'`).
->     
-> 2. **Second Argument (Downstream):** `mapping` applies a transformation (`toUpperCase`) _before_ collecting into a List.
->     
-> 3. **Flow:** "Apple" -> Group 'A' -> Transform to "APPLE" -> Add to List.
->     
-> 4. **Result:** The keys are Characters, and values are Lists of uppercase Strings.
->     
-
----
-
-### Question 13: Local Variable Type Inference (var)
-
-> [!info] Source
-> 
-> Chapter 1 - Variables / Lesson 2
-
-Java
-
-```
-public class VarCheck {
-    // var x = 10; // Line 1
-    public void test() {
-        var a = 10;      // Line 2
-        var b = (String) null; // Line 3
-        var c = {1, 2};  // Line 4
+public class GenericBound {
+    public static void addNumbers(List<? super Integer> list) {
+        list.add(10);
+        list.add(new Integer(20)); // Deprecated but valid syntax
+        list.add(new Object());    // Line X
     }
 }
 ```
 
-**Which lines cause a compilation error?**
+**What happens when compiling Line X?** A. Compiles successfully. B. Compilation error. C. Compiles but throws ClassCastException at runtime. D. Compiles only if the list passed is `List<Object>`.
 
-**A.** Line 1 and Line 4
+**Correct Answer: B**
 
-**B.** Line 3 and Line 4
-
-**C.** Line 1 and Line 3
-
-**D.** All lines.
-
-> [!success] Answer: A (Line 1 and Line 4)
-
-> [!info] Deep Dive
-> 
-> 1. **Line 1 (`var x = 10`):** **Error.** `var` is not allowed for instance variables (fields). It is only for local variables.
->     
-> 2. **Line 2 (`var a = 10`):** **Valid.** Infers `int`.
->     
-> 3. **Line 3 (`var b = (String) null`):** **Valid.** `null` alone is illegal, but casting it provides a type (`String`), so inference works.
->     
-> 4. **Line 4 (`var c = {1, 2}`):** **Error.** Array Initializers (`{}`) require an explicit type on the left or `new int[]{}` on the right. Inference cannot guess the array type from standalone brackets.
->     
+- **Concept:** Lower Bounded Wildcards (`? super T`).
+- **Deep Explanation:** `List<? super Integer>` means "A list of Integer or any of its superclasses (Number, Object)".
+    - You **can** add `Integer` (or subclasses of Integer) because the list is guaranteed to be capable of holding Integers.
+    - You **cannot** add `Object` because the actual list instance might be a `List<Integer>` or `List<Number>`. An `Object` is not necessarily an `Integer`.
+- **Why it's Right:** The compiler ensures type safety. Adding an `Object` to what might be a `List<Integer>` would violate type safety. Therefore, Line X generates a compilation error.
+- **Why Others are Wrong:** A is wrong because `add` with lower bounds only accepts the lower bound type (`Integer`) or its subclasses.
 
 ---
 
-### Question 14: Serialization & Inheritance
+### Question 7: JDBC ResultSet Cursor
 
-> [!info] Source
-> 
-> Chapter 9 - I/O / Lesson Appendix
-
-Java
+**Topic:** JDBC (Lesson Appendix 1 / Textbook Ch 10)
 
 ```
-class Person {
-    String name = "Unknown";
-    Person() { name = "Default"; } // No-arg constructor
+try (var conn = DriverManager.getConnection("jdbc:derby:zoo");
+     var stmt = conn.createStatement();
+     var rs = stmt.executeQuery("SELECT count(*) FROM animals")) { // Returns 1 row
+
+    System.out.println(rs.getInt(1)); // Line X
 }
-class Employee extends Person implements Serializable {
-    String role;
-    Employee(String r) { role = r; }
-}
-// Assume serialization and deserialization occurs here
 ```
 
-**What is the value of `name` after `Employee` is deserialized?**
+**What is the result assuming the table exists?** A. Prints the count. B. Prints 0. C. Throws SQLException at runtime. D. Compilation error.
 
-**A.** `Unknown`
+**Correct Answer: C**
 
-**B.** `Default`
-
-**C.** `null`
-
-**D.** The value it had during serialization.
-
-> [!success] Answer: B (`Default`)
-
-> [!info] Deep Dive
-> 
-> When deserializing an object:
-> 
-> 1. **Serializable Class (`Employee`):** Its constructor is **skipped**. Fields are populated from the byte stream.
->     
-> 2. **Non-Serializable Parent (`Person`):** Java **MUST** run the no-argument constructor of the first non-serializable parent to initialize inherited fields.
->     
-> 3. **Execution:** `Person()` constructor runs, setting `name = "Default"`.
->     
-> 4. _Note:_ If `Person` did not have a no-arg constructor, serialization would fail at runtime with `InvalidClassException`.
->     
+- **Concept:** ResultSet Cursor Position.
+- **Deep Explanation:** When a `ResultSet` is returned, the cursor is positioned **before the first row**. You must call `rs.next()` at least once to move the cursor to the first row of data.
+- **Why it's Right:** Attempting to access data (`rs.getInt()`) before calling `next()` results in a `SQLException` with a message indicating an "Invalid cursor state" or similar.
+- **Why Others are Wrong:** A and B assume the cursor is automatically on the first row, which is false in JDBC.
 
 ---
 
-### Question 15: Pattern Matching Scope
+### Question 8: Modules & Transitive Dependencies
 
-> [!info] Source
-> 
-> Chapter 2 - Flow Control / Lesson 3
+**Topic:** Modules (Lesson 7 / Textbook Ch 7)
 
-Java
+**File: module-info.java (Module A)**
 
 ```
-Object o = 5;
-if (!(o instanceof Integer i)) {
-    return;
+module A {
+    exports com.a;
 }
-System.out.println(i);
 ```
 
-**What happens?**
+**File: module-info.java (Module B)**
 
-**A.** Prints 5.
+```
+module B {
+    requires transitive A;
+}
+```
 
-**B.** Compilation Error: `i` not in scope.
+**File: module-info.java (Module C)**
 
-**C.** Runtime Error.
+```
+module C {
+    requires B;
+}
+```
 
-**D.** Prints `null`.
+**Which statement is true regarding Module C?** A. Module C can access packages in Module A. B. Module C cannot access packages in Module A without explicitly requiring it. C. Module C creates a cyclic dependency. D. Module B fails to compile.
 
-> [!success] Answer: A (Prints 5)
+**Correct Answer: A**
 
-> [!info] Deep Dive
-> 
-> This is Flow Scoping in Pattern Matching (Java 16+).
-> 
-> 1. **Logic:** The condition is inverted `!`.
->     
-> 2. **If Block:** If `o` is **NOT** an Integer, we enter the block and `return`.
->     
-> 3. **After the If:** The compiler knows that if execution reaches `System.out.println(i)`, the condition `!(o instanceof Integer)` must have been false. Therefore, `o instanceof Integer` must be **true**.
->     
-> 4. **Scope:** Because the compiler guarantees `i` is initialized in this path, `i` is legally in scope and usable.
->
+- **Concept:** Implied Readability (`requires transitive`).
+- **Deep Explanation:** When Module B `requires transitive A`, any module that reads B (like Module C) **automatically reads A** as well.
+- **Why it's Right:** Because of the `transitive` keyword in B, Module C has "implied readability" to Module A, meaning it can access exported packages from A without adding `requires A` in its own descriptor.
+- **Why Others are Wrong:** B is incorrect because `transitive` solves exactly this problem. C is incorrect as there is no loop (C->B->A).
+
+---
+
+### Question 9: Functional Interfaces & Ambiguity
+
+**Topic:** Lambda Expressions (Lesson 8 / Textbook Ch 6)
+
+```
+import java.util.concurrent.*;
+
+public class Ambiguity {
+    public static void execute(Runnable r) { System.out.print("Run"); }
+    public static void execute(Callable<String> c) { System.out.print("Call"); }
+
+    public static void main(String[] args) {
+        execute(() -> { return "Done"; }); // Line X
+    }
+}
+```
+
+**What is the result?** A. Run B. Call C. Compilation error due to ambiguity. D. Runtime Exception.
+
+**Correct Answer: B**
+
+- **Concept:** Functional Interface Matching.
+- **Deep Explanation:** The compiler looks at the lambda body to determine which interface matches.
+    - `Runnable`'s method is `void run()`. It returns nothing.
+    - `Callable`'s method is `V call()`. It returns a value.
+- **Why it's Right:** The lambda `{ return "Done"; }` returns a String. This is **incompatible** with `Runnable` (void) but **compatible** with `Callable<String>`. Therefore, the compiler selects the `Callable` overload, printing "Call".
+- **Why Others are Wrong:** A is incorrect because the lambda returns a value. C is incorrect because the return value disambiguates the call.
+
+---
+
+### Question 10: Localization & ResourceBundle Fallback
+
+**Topic:** Localization (Lesson 11 / Textbook Ch 11)
+
+**Files:**
+
+1. `Menu.properties`
+2. `Menu_en.properties`
+3. `Menu_fr_CA.properties`
+
+```
+Locale.setDefault(new Locale("en", "US"));
+var rb = ResourceBundle.getBundle("Menu", new Locale("fr", "FR"));
+```
+
+**Which file is loaded?** A. `Menu_fr_CA.properties` B. `Menu_en.properties` C. `Menu.properties` D. Throws MissingResourceException
+
+**Correct Answer: B**
+
+- **Concept:** ResourceBundle Candidate Selection.
+- **Deep Explanation:** Java searches for bundles in this order:
+    1. Requested Locale: `fr_FR` (Not found)
+    2. Requested Language: `fr` (Not found - `fr_CA` does not match `fr`)
+    3. **Default Locale:** `en_US` (Not found)
+    4. **Default Language:** `en` (**Found:** `Menu_en.properties`)
+    5. Root: `Menu.properties`
+- **Why it's Right:** Since the requested `fr_FR` and `fr` are missing, Java falls back to the system default locale (`en_US`). It finds `Menu_en.properties` (matching the language of the default locale).
+- **Why Others are Wrong:** A is wrong because `fr_CA` is not a parent of `fr_FR` or `fr`. C is wrong because the Default Language match (`en`) takes precedence over the Root bundle.

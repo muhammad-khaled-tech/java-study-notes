@@ -7,7 +7,8 @@
     "All lectures/Generics and Lambda Expressions and Method Reference.md": "rtl",
     "All lectures/Stream API.md": "rtl",
     "All lectures/Java collections.md": "rtl",
-    "Exam Simulation/Section 1.md": "rtl"
+    "Exam Simulation/Section 1.md": "rtl",
+    "All lectures/Threading.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

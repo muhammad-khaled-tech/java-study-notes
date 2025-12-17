@@ -6,7 +6,7 @@
 
 **(Source: Chapter 2 - Controlling Program Flow / Lesson 3)**
 
-```
+```java
 public class SwitchMagic {
     public static void main(String[] args) {
         int k = 10;
@@ -41,7 +41,7 @@ public class SwitchMagic {
 
 **(Source: Chapter 6 - Streams / Lesson 9)**
 
-```
+```java
 import java.util.List;
 
 public class OrderChaos {
@@ -71,7 +71,7 @@ public class OrderChaos {
 
 **(Source: Chapter 3 - Object-Oriented Approach / Lesson 5)**
 
-```
+```java
 public record User(String name) {
     public User {
         if (name == null) throw new IllegalArgumentException();
@@ -96,7 +96,7 @@ public record User(String name) {
 
 **(Source: Chapter 7 - Modules / Lesson 4)**
 
-```
+```java
 module com.provider {
     provides com.api.Service with com.impl.ServiceImpl;
     // Line X
@@ -119,7 +119,7 @@ module com.provider {
 
 **(Source: Chapter 9 - I/O / Lesson Appendix)**
 
-```
+```java
 import java.nio.file.*;
 
 public class PathTest {
@@ -148,7 +148,7 @@ public class PathTest {
 
 **(Source: Chapter 10 - JDBC / Lesson Appendix)**
 
-```
+```java
 Statement stmt = conn.createStatement(
     ResultSet.TYPE_SCROLL_SENSITIVE,
     ResultSet.CONCUR_UPDATABLE);
@@ -174,7 +174,7 @@ System.out.println(rs.getString("qty"));
 
 **(Source: Chapter 5 - Collections / Lesson 9)**
 
-```
+```java
 import java.util.*;
 public class MergeMap {
     public static void main(String[] args) {

@@ -137,7 +137,10 @@ public class ResourceTrap {
 ```
 
 **What is the result?** 
-A. Compiles and runs B. Compilation Error at line `try` C. Compilation Error inside `catch` block D. Throws `IllegalStateException`
+A. Compiles and runs
+B. Compilation Error at line `try` 
+C. Compilation Error inside `catch` block 
+D. Throws `IllegalStateException`
 
 **الإجابة: C (Compilation Error inside catch block)**
 
@@ -161,7 +164,11 @@ public class GenericTrap {
 }
 ```
 
-**What is the result?** A. Compiles and runs B. Compilation Error: Incompatible types C. Runtime `ClassCastException` D. Runtime `ArrayStoreException`
+**What is the result?** 
+A. Compiles and runs
+B. Compilation Error: Incompatible types 
+C. Runtime `ClassCastException`
+D. Runtime `ArrayStoreException`
 
 **الإجابة: B (Compilation Error: Incompatible types)**
 
@@ -183,7 +190,11 @@ public class WildcardTrap {
 }
 ```
 
-**What is the result?** A. Compiles and adds "Hello" B. Compilation Error at initialization C. Compilation Error at `list.add` D. Runtime Error
+**What is the result?** 
+A. Compiles and adds "Hello"
+B. Compilation Error at initialization 
+C. Compilation Error at `list.add` 
+D. Runtime Error
 
 **الإجابة: C (Compilation Error at list.add)**
 
@@ -203,7 +214,11 @@ public class ErasureTrap {
 }
 ```
 
-**What happens when compiling this class?** A. Compiles successfully (Overloading works) B. Compilation Error: Name clash C. Compilation Error: Duplicate method signature D. Runtime Error
+**What happens when compiling this class?** 
+A. Compiles successfully (Overloading works)
+B. Compilation Error: Name clash 
+C. Compilation Error: Duplicate method signature
+D. Runtime Error
 
 **الإجابة: C (Compilation Error: Duplicate method signature)**
 
@@ -225,7 +240,9 @@ public class PECSTrap {
 }
 ```
 
-**What is the result?** A. Compiles and runs B. Compilation Error at initialization C. Compilation Error at `list.add` D. Runtime Exception
+**What is the result?** 
+A. Compiles and runs 
+B. Compilation Error at initialization C. Compilation Error at `list.add` D. Runtime Exception
 
 **الإجابة: C (Compilation Error at list.add)**
 

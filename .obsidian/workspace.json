@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/different topics set 1.md",
+                "file": "All lectures/Stream API.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "different topics set 1"
+              "title": "Stream API"
             }
           }
         ]
@@ -195,17 +195,18 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "a4263eb0ef45c795",
+  "active": "16b9fec0a8affcaf",
   "lastOpenFiles": [
-    "All lectures/Generics and Lambda Expressions and Method Reference.md",
+    "All lectures/Threading.md",
     "All lectures/Exceptions.md",
+    "All lectures/Generics and Lambda Expressions and Method Reference.md",
+    "Exam Simulation/different topics set 1.md",
     "Exam Simulation/Section 1.md",
     "Exam Simulation/Section 2.md",
     "Exam Simulation/Section 3.md",
     "Exam Simulation/section 4.md",
     "Exam Simulation/section 5.md",
     "different explanations/Inner Classes.md",
-    "Exam Simulation/different topics set 1.md",
     "Exam Simulation",
     "different explanations/Wrapers.md",
     "different explanations/حاجات متفرقة جات على بالي.md",
@@ -213,7 +214,6 @@
     "different explanations/Functional interfaces.md",
     "All lectures/Data Types.md",
     "All lectures/The History and Evolution of Java.md",
-    "All lectures/Threading.md",
     "All lectures/Wrapper Classes & inner classes.md",
     "All lectures",
     "different explanations/Callback interface.md",

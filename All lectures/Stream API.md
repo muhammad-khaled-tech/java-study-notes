@@ -623,7 +623,7 @@ graph TD
 
 **(مخطط انسيابي: استراتيجية التقسيم)** **(Source:)**
 
-```
+```mermad
 graph TD
     Data[Big Data List] --> Split{Splitter}
     Split --> Chunk1[Chunk 1 -> Thread A]
@@ -660,7 +660,7 @@ graph TD
 
 **(Source:)**
 
-```
+```java
 // الهدف: جمع الأرقام من 1 لـ N بالتوازي
 Stream.iterate(1L, i -> i + 1) // 1. المصدر: Iterate
       .limit(N)
@@ -678,7 +678,7 @@ Stream.iterate(1L, i -> i + 1) // 1. المصدر: Iterate
 
 **(Source:)**
 
-```
+```java
 // استخدام LongStream.rangeClosed
 LongStream.rangeClosed(1, N) // 1. المصدر: نطاق رقمي
           .parallel()        // 2. توازي
@@ -701,7 +701,7 @@ LongStream.rangeClosed(1, N) // 1. المصدر: نطاق رقمي
 
 ##### 💻 Code Autopsy: The Benchmark Code
 
-```
+```java
 // دالة بتشوف الرقم أولي ولا لأ (بتاخد وقت ومجهود من الـ CPU)
 public boolean isPrime(long n) { ... }
 

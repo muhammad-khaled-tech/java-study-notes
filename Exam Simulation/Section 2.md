@@ -359,7 +359,7 @@ class Outer {
 
 **(Source: Lesson 5 - Part 2)**
 
-```
+```java
 class Outer {
     private String msg = "Secret";
     class Inner {

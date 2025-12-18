@@ -510,7 +510,493 @@ public class MapDuplicate {
 
 
 ---
+ولا يهمك يا بطل، ده العشم برضه! 😉
 
+أنا عدت صياغة الشرح كله بلهجة "السينيور" المصرية، عشان تفهم "الزتونة" والسبب العميق وراء كل إجابة، مش مجرد كلمتين ورد غطاهم.
+
+انسخ الكود ده عندك في **Obsidian**، واستمتع بالمذاكرة:
+
+---
+
+Markdown
+
+````
+# 🧪 Java OCP Tricky Questions (Set 2)
+**Tags:** #Java #OCP #Tricky #Collections #Streams
+
+---
+
+### 🟢 Q11: Mutable Key Trap in `HashMap`
+**Topic:** Collections (Hashing)
+
+```java
+import java.util.HashMap;
+
+class Key {
+    int id;
+    Key(int id) { this.id = id; }
+    public int hashCode() { return id; } // يعتمد على id المتغير
+}
+
+public class MapKey {
+    public static void main(String[] args) {
+        HashMap<Key, String> map = new HashMap<>();
+        Key k = new Key(1);
+
+        map.put(k, "Value"); // (1) اتحطت في Bucket بناءً على id=1
+        k.id = 2;            // (2) غيرنا الـ id، فالـ HashCode اتغير!
+
+        System.out.println(map.get(k)); // (3) بنبحث بالمفتاح المعدل
+    }
+}
+````
+
+**What is the output?**
+
+- A) Value
+    
+- B) null
+    
+- C) Compilation Error
+    
+- D) Runtime Exception
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: B — null
+> 
+> 🧠 تحليل السينيور:
+> 
+> دي غلطة "المبتدئين" القاتلة في الـ HashMaps.
+> 
+> 1. لما عملت `put`، الجافا حسبت الـ HashCode (كان 1) وحطت القيمة في الـ Bucket المناسب للرقم ده.
+>     
+> 2. لما أنت غيرت `k.id = 2`، أنت غيرت الـ HashCode بتاع المفتاح وهو جوه الـ Map!
+>     
+> 3. لما جيت تعمل `get`، الجافا حسبت الـ HashCode الجديد (بقى 2)، وراحت تدور في Bucket تاني خالص غير اللي البيانات متخزنة فيه.
+>     
+> 
+> **💡 الزتونة:** الـ Keys في الـ HashMap لازم تكون **Immutable** (غير قابلة للتغيير)، عشان كده بنحب نستخدم `String` او `Integer` كمفاتيح.
+
+---
+
+### 🟢 Q12: `Map.merge()` Returning `null`
+
+**Topic:** Collections (Map API)
+
+Java
+
+```
+import java.util.HashMap;
+import java.util.Map;
+
+public class MapMerge {
+    public static void main(String[] args) {
+        Map<String, String> map = new HashMap<>();
+        map.put("key", "value");
+
+        // الـ Remapping Function بترجع null
+        map.merge("key", "new", (v1, v2) -> null); 
+        System.out.println(map);
+    }
+}
+```
+
+**What is the output?**
+
+- A) `{key=null}`
+    
+- B) `{key=value}`
+    
+- C) `{key=new}`
+    
+- D) `{}`
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: D — Empty Map {}
+> 
+> 🧠 تحليل السينيور:
+> 
+> دالة merge في الجافا ليها سلوك سحري مع الـ null.
+> 
+> القاعدة بتقول: لو الـ Function اللي أنت باعتها عشان تدمج القيمتين (القديمة والجديدة) قررت ترجع null، دي إشارة للـ Map إنها تحذف الـ Entry ده تماماً، مش تحط قيمته بـ null.
+> 
+> **💡 الزتونة:** `return null` inside merge = **Delete Key**.
+
+---
+
+### 🟢 Q13: `Stream.iterate` Execution Order
+
+**Topic:** Streams
+
+Java
+
+```
+import java.util.stream.Stream;
+
+public class IterateTest {
+    public static void main(String[] args) {
+        Stream.iterate(1, x -> x + 1) // 1, 2, 3, 4...
+              .limit(3)               // 1, 2, 3 (وقفنا هنا)
+              .filter(x -> x > 1)     // 1 طارت، اتبقى 2, 3
+              .forEach(System.out::print);
+    }
+}
+```
+
+**What is the output?**
+
+- A) 123
+    
+- B) 23
+    
+- C) 12
+    
+- D) 234
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: B — 23
+> 
+> 🧠 تحليل السينيور:
+> 
+> لازم تمشي ورا الـ Pipeline خطوة بخطوة:
+> 
+> 1. `iterate`: بدأ يعد 1, 2, 3...
+>     
+> 2. `limit(3)`: دي "قصت" الشريط، وأخدت أول 3 أرقام بس (1, 2, 3).
+>     
+> 3. `filter(x > 1)`: دي "مصفاة"، عدت الـ 2 والـ 3، ومنعت الـ 1.
+>     
+> 4. `forEach`: طبعت اللي اتبقى.
+>     
+
+---
+
+### 🟢 Q14: Mutable Object inside `Set`
+
+**Topic:** Collections (Set)
+
+Java
+
+```
+import java.util.HashSet;
+import java.util.ArrayList;
+
+public class SetMutable {
+    public static void main(String[] args) {
+        HashSet<ArrayList<Integer>> set = new HashSet<>();
+        ArrayList<Integer> list = new ArrayList<>();
+
+        list.add(1);
+        set.add(list); // ضفنا الليستة وهي فيها [1]
+
+        list.add(2);   // عدلنا نفس الليستة، بقت [1, 2]
+        set.add(list); // بنحاول نضيف نفس الأوبجيكت تاني
+
+        System.out.println(set.size());
+    }
+}
+```
+
+**What is the output?**
+
+- A) 1
+    
+- B) 2
+    
+- C) Compilation Error
+    
+- D) Runtime Exception
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: A — 1
+> 
+> 🧠 تحليل السينيور:
+> 
+> الـ Set بتمنع التكرار. هنا أنت بتحاول تضيف نفس الـ Object Reference مرتين.
+> 
+> صحيح محتوى الليستة اتغير، لكن هو في الآخر نفس "الكائن" (Pointer) في الميموري. الـ Set لما جيت تضيفه المرة التانية، بصت لقت إن الـ Reference ده عندها أصلاً، فرفضت الإضافة.
+> 
+> **💡 تنويه:** اللعب في الـ HashCode بتاع أوبجيكت جوه Set (زي ما عملنا بتغيير محتوى الليستة) ده خطر جداً وممكن يخلي الـ Set تتصرف بغرابة، بس في الحالة دي الحجم هيفضل 1.
+
+---
+
+### 🟢 Q15: Comparator Lambda Syntax
+
+**Topic:** Lambda & Comparator
+
+Java
+
+```
+import java.util.Comparator;
+
+public class CompSyntax {
+    public static void main(String[] args) {
+        Comparator<String> c = (s1, s2) -> s1.compareTo(s2);
+        System.out.println(c.compare("A", "B"));
+    }
+}
+```
+
+**What is the output?**
+
+- A) -1
+    
+- B) 1
+    
+- C) Compilation Error
+    
+- D) 0
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: A — -1
+> 
+> 🧠 تحليل السينيور:
+> 
+> دالة compareTo في الـ String بتمشي بترتيب القاموس (Lexicographical).
+> 
+> - لو الأول (`A`) **أصغر** من التاني (`B`) ← النتيجة **سالبة**.
+>     
+> - لو بيساويه ← صفر.
+>     
+> - لو أكبر ← موجبة.
+>     
+>     بما إن A بتيجي قبل B، فالنتيجة -1.
+>     
+
+---
+
+### 🟢 Q16: Parallel Stream + Stateful Lambda
+
+**Topic:** Concurrency & Streams
+
+Java
+
+```
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
+
+public class RaceCond {
+    public static void main(String[] args) {
+        List<Integer> data = new ArrayList<>();
+
+        IntStream.range(0, 100)
+                 .parallel() // شغلنا التيربو (Multi-threading)
+                 .forEach(i -> data.add(i)); // كارثة هنا!
+
+        System.out.println(data.size());
+    }
+}
+```
+
+**What is the result?**
+
+- A) 100
+    
+- B) Compilation Error
+    
+- C) Unpredictable
+    
+- D) Always throws Exception
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: C — Unpredictable
+> 
+> 🧠 تحليل السينيور:
+> 
+> أنت هنا بتعمل جريمة برمجية! 😅
+> 
+> 1. `ArrayList` كلاس **Not Thread-Safe**. يعني مبيعرفش يحمي نفسه لما كذا Thread يدخلوا عليه في نفس الوقت.
+>     
+> 2. لما شغلت `.parallel()`، فيه كذا Thread بيحاولوا يعملوا `add` في نفس اللحظة.
+>     
+> 3. النتيجة: Race Condition. ممكن عنصرين يتكتبوا فوق بعض، ممكن الـ Index يضرب، ممكن يرمي Exception، وممكن (بالحظ) تطلع 100. عشان كده الإجابة "غير متوقعة".
+>     
+
+---
+
+### 🟢 Q17: `allMatch` on Empty Stream
+
+**Topic:** Streams
+
+Java
+
+```
+boolean result = Stream.empty().allMatch(s -> false);
+System.out.println(result);
+```
+
+**What is the output?**
+
+- A) true
+    
+- B) false
+    
+- C) null
+    
+- D) Runtime Exception
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: A — true
+> 
+> 🧠 تحليل السينيور:
+> 
+> دي قاعدة منطقية في علم الرياضيات اسمها Vacuous Truth (الحقيقة الفراغية).
+> 
+> دالة allMatch بتسأل: "هل فيه أي عنصر كسر القاعدة؟".
+> 
+> بما إن الـ Stream فاضي، مفيش ولا عنصر كسر القاعدة، يبقى الإجابة "نعم، الكل موافق" (لأنه مفيش حد أصلاً).
+> 
+> **💡 خد بالك:** `anyMatch` على ستريم فاضي بترجع `false`.
+
+---
+
+### 🟢 Q18: `Optional.of(null)` Trap
+
+**Topic:** Optionals
+
+Java
+
+```
+import java.util.Optional;
+
+public class OptionalTest {
+    public static void main(String[] args) {
+        Optional<String> o = Optional.of(null); // الفخ هنا
+        System.out.println(o.isPresent());
+    }
+}
+```
+
+**What is the result?**
+
+- A) false
+    
+- B) true
+    
+- C) Compilation Error
+    
+- D) `NullPointerException`
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: D — NullPointerException
+> 
+> 🧠 تحليل السينيور:
+> 
+> الفرق بين of و ofNullable بيوقع ناس كتير:
+> 
+> - `Optional.of(val)`: بتقول للجافا "أنا متأكد إن القيمة دي مش null". فلو طلعت null، الجافا بتعاقبك بـ NPE في وشك فوراً.
+>     
+> - `Optional.ofNullable(val)`: دي "الدبلوماسية"، لو null هتعمل Optional فاضي، ولو مش null هتحط القيمة.
+>     
+
+---
+
+### 🟢 Q19: `Stream.sorted()` without `Comparable`
+
+**Topic:** Streams & Sorting
+
+Java
+
+```
+import java.util.stream.Stream;
+
+class Item {} // ولا هو Comparable ولا نيلة
+
+public class SortTest {
+    public static void main(String[] args) {
+        Stream.of(new Item(), new Item())
+              .sorted() // رتب يا باشا
+              .count();
+    }
+}
+```
+
+**What is the result?**
+
+- A) 2
+    
+- B) 0
+    
+- C) Compilation Error
+    
+- D) `ClassCastException`
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: D — ClassCastException
+> 
+> 🧠 تحليل السينيور:
+> 
+> دالة sorted() اللي من غير باراميترز بتفترض افتراض بريء: إن الأوبجيكتس اللي جاية لها "بتعرف تتقارن ببعض" (يعني بتعمل implement لـ Comparable).
+> 
+> كلاس Item ده كلاس "أبيض"، مفيهوش أي منطق للمقارنة. فالجافا بتيجي ترتب، مش عارفة مين قبل مين، فبترمي ClassCastException في الر runtime.
+
+---
+
+### 🟢 Q20: Stream Does NOT Modify Source Collection
+
+**Topic:** Streams Concept
+
+Java
+
+```
+import java.util.ArrayList;
+import java.util.List;
+
+public class RemoveLogic {
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("A");
+        list.add("B");
+
+        // بنفلتر الـ Stream، بس مش بنعمل حاجة بالنتيجة
+        list.stream().filter(s -> s.equals("A")); 
+
+        System.out.println(list.size());
+    }
+}
+```
+
+**What is the output?**
+
+- A) 1
+    
+- B) 2
+    
+- C) 0
+    
+- D) Compilation Error
+    
+
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
+> 
+> الإجابة الصحيحة: B — 2
+> 
+> 🧠 تحليل السينيور:
+> 
+> القاعدة الذهبية للـ Streams: Streams do NOT modify the source.
+> 
+> الـ Stream عامل زي "النظارة" أو "خط إنتاج"، بيوريك البيانات بشكل معين أو بيطلع بيانات جديدة، لكنه مبيلمسش الليستة الأصلية list.
+> 
+> عشان تحذف من الليستة، لازم تستخدم list.removeIf(...) أو تجمع النتيجة في ليستة جديدة.
 
 ---
 

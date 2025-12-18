@@ -260,9 +260,9 @@ System.out.print("Main ");
 
 **Topic:** Design Principles
 
-Java
 
-```
+
+```Java
 class Vehicle {}
 class Car extends Vehicle implements Runnable {
     public void run() { System.out.println("Vroom"); }
@@ -298,9 +298,9 @@ class Car extends Vehicle implements Runnable {
 
 **Topic:** Static Methods
 
-Java
 
-```
+
+```Java
 Thread t = new Thread(() -> System.out.println("Run"));
 t.start();
 t.sleep(1000); // الفخ هنا

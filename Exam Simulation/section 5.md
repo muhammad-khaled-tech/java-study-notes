@@ -99,9 +99,9 @@ public class MyTask implements Runnable {
 
 **Topic:** Thread State
 
-Java
 
-```
+
+```Java
 public class Restart {
     public static void main(String[] args) {
         Thread t = new Thread(() -> System.out.println("Go"));
@@ -140,9 +140,9 @@ public class Restart {
 
 **Topic:** Exception Handling
 
-Java
 
-```
+
+```Java
 public class Sleeper implements Runnable {
     public void run() {
         try {

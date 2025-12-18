@@ -1,12 +1,11 @@
 
-
 ### Section 3: Exception Handling (Hierarchy & Flow)
 
 #### Q1: The Unreachable Catch Trap
 
 **(Source: Lesson 6 - Slide 275, Slide 295)**
 
-```
+```java
 import java.io.*;
 public class ExceptionTrap {
     public void readFile() {

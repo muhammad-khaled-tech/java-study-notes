@@ -246,7 +246,7 @@ public class ParseTrick {
 
 **(Source: Lesson 5)**
 
-```
+```java
 public class EqualityTest {
     public static void main(String[] args) {
         Long l = 100L;
@@ -277,7 +277,7 @@ public class EqualityTest {
 
 **(Source: Lesson 5 - Part 2)**
 
-```
+```java
 class Outer {
     class Inner {}
 }

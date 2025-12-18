@@ -153,7 +153,7 @@ D. Throws `IllegalStateException`
 
 **(Source: Lesson 7 - Slide 305, 306)**
 
-```
+```java
 import java.util.*;
 public class GenericTrap {
     public static void main(String[] args) {
@@ -179,7 +179,7 @@ D. Runtime `ArrayStoreException`
 
 **(Source: Lesson 7 - Slide 309)**
 
-```
+```java
 import java.util.*;
 public class WildcardTrap {
     public static void main(String[] args) {
@@ -205,7 +205,7 @@ D. Runtime Error
 
 **(Source: Lesson 7 - Slide 307)**
 
-```
+```java
 import java.util.*;
 public class ErasureTrap {
     public void sort(List<String> list) {}
@@ -229,7 +229,7 @@ D. Runtime Error
 
 **(Source: Lesson 7 - Slide 309, 310)**
 
-```
+```java
 import java.util.*;
 public class PECSTrap {
     public static void main(String[] args) {

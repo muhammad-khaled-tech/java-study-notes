@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Exam Simulation/Total set 1.md",
+                "file": "Exam Simulation/Total set 5.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Total set 1"
+              "title": "Total set 5"
             }
           }
         ]
@@ -197,8 +197,10 @@
   },
   "active": "16b9fec0a8affcaf",
   "lastOpenFiles": [
-    "All lectures/Java collections.md",
+    "Exam Simulation/Total set 3.md",
+    "Exam Simulation/Total set 2.md",
     "Exam Simulation/Total set 1.md",
+    "All lectures/Java collections.md",
     "Exam Simulation/section 5.md",
     "Exam Simulation/section 4.md",
     "Exam Simulation/Section 3.md",
@@ -215,9 +217,7 @@
     "different explanations/Untitled 1.md",
     "Exam Simulation/Section 1.md",
     "Exam Simulation/Total set 4 1.md",
-    "Exam Simulation/Total set 3.md",
     "All lectures/Threading.md",
-    "Exam Simulation/Total set 2.md",
     "All lectures/Stream API.md",
     "All lectures/The History and Evolution of Java.md",
     "All lectures/Wrapper Classes & inner classes.md",

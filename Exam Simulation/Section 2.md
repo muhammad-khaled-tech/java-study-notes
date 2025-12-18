@@ -187,7 +187,7 @@ public class CacheTrap {
 
 **(Source: Lesson 2 & Lesson 5)**
 
-```
+```java
 public class OverloadTrick {
     static void go(Long x) { System.out.print("Long"); }
     static void go(Integer x) { System.out.print("Integer"); }

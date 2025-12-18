@@ -717,9 +717,7 @@ public class SetMutable {
 
 **Topic:** Lambda & Comparator
 
-Java
-
-```
+```Java
 import java.util.Comparator;
 
 public class CompSyntax {

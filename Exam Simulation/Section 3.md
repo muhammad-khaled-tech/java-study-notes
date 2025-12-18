@@ -36,7 +36,7 @@ D. Compilation Error
 
 **(Source: Lesson 6 - Slide 281)**
 
-```
+```java
 public class MultiCatchTrap {
     public static void main(String[] args) {
         try {
@@ -64,7 +64,7 @@ D. Ignores the exception
 
 **(Source: Lesson 6 - Slide 287)**
 
-```
+```java
 public class FinallyTrap {
     public static int test() {
         try {
@@ -95,7 +95,7 @@ D. Compilation Error (Missing catch)
 
 **(Source: Lesson 6 - Slide 263, Slide 296)**
 
-```
+```java
 import java.io.*;
 class Parent {
     void doWork() throws IOException {}
@@ -122,7 +122,7 @@ D. Runtime Error upon instantiation
 
 **(Source: Lesson 6 - Slide 289, 290)**
 
-```
+```java
 import java.util.Scanner;
 public class ResourceTrap {
     public static void main(String[] args) {

@@ -395,7 +395,8 @@ public class Test {
 }
 ```
 
-**What is the result?** **A.** Prints "Done"
+**What is the result?** 
+**A.** Prints "Done"
 **B.** Compilation Error: Missing semicolon. 
 **C.** Compilation Error: Cannot instantiate interface. 
 **D.** Compiles but does nothing.

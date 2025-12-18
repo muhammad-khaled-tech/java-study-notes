@@ -255,7 +255,7 @@ D. Runtime Exception
 
 **(Source: Lesson 7 - Slide 307 - Implicit)**
 
-```
+```java
 public class SyntaxTrap {
     public static T void print(T t) {
         System.out.println(t);
@@ -281,7 +281,7 @@ D. Warnings only
 
 **(Source: Lesson 8 - Slide 215)**
 
-```
+```java
 @FunctionalInterface
 interface SmartFunction {
     void execute();
@@ -306,7 +306,7 @@ D. Compilation Error: Missing default implementation
 
 **(Source: Lesson 8 - Slide 220)**
 
-```
+```java
 import java.util.function.Predicate;
 public class LambdaTrap {
     public static void main(String[] args) {
@@ -331,7 +331,7 @@ D. Runtime Error
 
 **(Source: Lesson 8 - Slide 232 Implicit, Slide 349)**
 
-```
+```java
 import java.util.function.Supplier;
 public class ScopeTrap {
     public static void main(String[] args) {

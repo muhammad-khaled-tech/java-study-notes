@@ -217,7 +217,7 @@ public class OverloadTrick {
 
 **(Source: Lesson 5 - Part 1)**
 
-```
+```java
 public class ParseTrick {
     public static void main(String[] args) {
         Boolean b1 = new Boolean("TruE");

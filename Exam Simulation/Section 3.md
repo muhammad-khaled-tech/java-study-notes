@@ -359,7 +359,7 @@ D. Compilation Error inside lambda
 
 **(Source: Lesson 8 - Slide 219)**
 
-```
+```java
 import java.util.function.Consumer;
 public class ConsumerTrap {
     public static void main(String[] args) {
@@ -384,7 +384,7 @@ D. Ignores the return value
 
 **(Source: Lesson 8 - Slide 216/220 - Implied)**
 
-```
+```java
 import java.util.function.IntPredicate;
 public class PrimitiveTrap {
     public static void main(String[] args) {

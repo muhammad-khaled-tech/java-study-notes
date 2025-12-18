@@ -895,9 +895,9 @@ public class OptionalTest {
 
 **Topic:** Streams & Sorting
 
-Java
 
-```
+
+```Java
 import java.util.stream.Stream;
 
 class Item {} // ولا هو Comparable ولا نيلة
@@ -938,9 +938,9 @@ public class SortTest {
 
 **Topic:** Streams Concept
 
-Java
 
-```
+
+```Java
 import java.util.ArrayList;
 import java.util.List;
 

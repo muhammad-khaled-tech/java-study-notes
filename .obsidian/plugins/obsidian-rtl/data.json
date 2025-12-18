@@ -9,7 +9,8 @@
     "All lectures/Java collections.md": "rtl",
     "Exam Simulation/Section 1.md": "rtl",
     "All lectures/Threading.md": "rtl",
-    "Exam Simulation/section 4.md": "auto"
+    "Exam Simulation/section 4.md": "auto",
+    "Exam Simulation/Total set 1.md": "rtl"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

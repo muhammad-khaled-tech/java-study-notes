@@ -331,7 +331,7 @@ public class Test {
 
 **(Source: Lesson 5 - Part 2)**
 
-```
+```java
 class Outer {
     void myMethod() {
         int x = 10;

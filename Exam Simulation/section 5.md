@@ -1,34 +1,22 @@
 
+---
+# 🧵 Multi-Threading — *مسك الختام* 🏁🎩
 
 ---
 
-## 🧵 Multi-Threading — _مسك الختام_ 🏁🎩
-
-> [!note]  
-> الجزء ده هو اللي بيفرق **المهندس الصنايعي** عن اللي حافظ API وخلاص.  
-> الغلط هنا مش Exception… الغلط هنا **Deadlock** يوقف Production 😈
-> 
-> **Sources:**
-> 
-> - Lesson 10 (Slides 473–494)
->     
-> - OCP Java Book
->     
-
----
-
-## 🧪 Question 1: `start()` vs `run()` — Context Switch Trap
+### 🟢 Question 1: `start()` vs `run()` — Context Switch Trap
+**Topic:** Thread Life Cycle
 
 ```java
 public class Runner {
     public static void main(String[] args) {
         Thread t = new Thread(() -> System.out.print("Run"));
         System.out.print("Start");
-        t.run();
+        t.run(); // الفخ هنا
         System.out.print("End");
     }
 }
-```
+````
 
 **What is the result?**
 
@@ -41,28 +29,34 @@ public class Runner {
 - D) Output order is not guaranteed
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: A — StartRunEnd**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 تحليل السينيور:**  
-> `run()` = **Normal method call**
+> الإجابة الصحيحة: A — StartRunEnd
 > 
-> - مفيش Thread جديد
+> 🧠 تحليل السينيور:
+> 
+> استدعاء t.run() مباشرة بيعتبر Normal Method Call.
+> 
+> - **مفيش** Thread جديد اتخلق.
 >     
-> - مفيش Context Switch
+> - **مفيش** Context Switch حصل.
 >     
-> - كله شغال على **Main Thread**
+> - الكود اتنفذ سطر بسطر (Sequential) على الـ **Main Thread**.
 >     
 > 
-> لو كانت `t.start()` → الإجابة كانت هتبقى **D**
+> **💡 تكة:** لو كانت `t.start()`، كان الترتيب هيبقى غير مضمون (الإجابة D).
 
 ---
 
-## 🧪 Question 2: Implementing `Runnable` — Access Modifier Trap
+### 🟢 Question 2: Implementing `Runnable` — Access Modifier Trap
 
-```java
+**Topic:** Interfaces & Overriding
+
+Java
+
+```
 public class MyTask implements Runnable {
-    void run() {
+    void run() { // الفخ هنا (Package-Private)
         System.out.println("Working...");
     }
     public static void main(String[] args) {
@@ -82,29 +76,37 @@ public class MyTask implements Runnable {
 - D) Runtime Exception
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: B**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 تحليل السينيور:**
+> الإجابة الصحيحة: B — Compilation Error
 > 
-> - `Runnable.run()` = `public abstract`
+> 🧠 تحليل السينيور:
+> 
+> الميثود run() في الإنترفيس Runnable معرفة إنها public abstract.
+> 
+> لما تيجي تعمل Override، ممنوع تقلل الـ Visibility.
+> 
+> - الإنترفيس: `public`
 >     
-> - ممنوع تقلل الـ visibility
+> - الكلاس بتاعك: `package-private` (default) ❌
 >     
-> 
-> ❌ `void run()`  
-> ✅ `public void run()`
+> - **الحل:** لازم تكتب `public void run()`.
+>     
 
 ---
 
-## 🧪 Question 3: Restarting a Thread — Zombie Thread
+### 🟢 Question 3: Restarting a Thread — Zombie Thread
 
-```java
+**Topic:** Thread State
+
+Java
+
+```
 public class Restart {
     public static void main(String[] args) {
         Thread t = new Thread(() -> System.out.println("Go"));
         t.start();
-        t.start();
+        t.start(); // بيحاول يصحيه تاني
     }
 }
 ```
@@ -120,25 +122,31 @@ public class Restart {
 - D) Compilation Error
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: C**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Thread Life Cycle:**  
-> `New → Runnable → Running → Dead`
+> الإجابة الصحيحة: C
 > 
-> ❌ مفيش رجوع من Dead
+> 🧠 تحليل السينيور:
 > 
-> Exception: `IllegalThreadStateException`
+> دورة حياة الـ Thread في اتجاه واحد: New → Runnable → Running → Dead.
+> 
+> مفيش رجوع من الموت! 💀
+> 
+> أول start() بتشتغل تمام. التانية بترمي IllegalThreadStateException لأن الـ Thread حالته اتغيرت خلاص ومينفعش يتعمل له start مرتين.
 
 ---
 
-## 🧪 Question 4: Checked Exception inside `run()`
+### 🟢 Question 4: Checked Exception inside `run()`
 
-```java
+**Topic:** Exception Handling
+
+Java
+
+```
 public class Sleeper implements Runnable {
     public void run() {
         try {
-            Thread.sleep(1000);
+            Thread.sleep(1000); // دي بترمي InterruptedException
         } catch (InterruptedException e) {
             System.out.print("Interrupted");
         }
@@ -157,25 +165,29 @@ public class Sleeper implements Runnable {
 - D) Main thread requires it
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: B**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Overriding Rule:**
+> الإجابة الصحيحة: B
 > 
-> - Parent method (`run`) → no checked exceptions
->     
-> - Child method → ممنوع يضيف
->     
+> 🧠 تحليل السينيور:
 > 
-> ✔ الحل الوحيد: Handle جوه الميثود
+> قاعدة الـ Overriding المقدسة: ممنوع الابن يرمي Checked Exception الأب مش راميه.
+> 
+> ميثود run() في Runnable مش بترمي أي Exceptions.
+> 
+> عشان كده، أي Checked Exception (زي InterruptedException) بيحصل جواها، لازم يتعالج جواها (try-catch)، ومينفعش تستخدم throws في التوقيع بتاعها.
 
 ---
 
-## 🧪 Question 5: Lambda Thread Creation Trap
+### 🟢 Question 5: Lambda Thread Creation Trap
 
-```java
+**Topic:** Functional Interfaces
+
+Java
+
+```
 Thread t = new Thread(
-    (String s) -> System.out.println(s)
+    (String s) -> System.out.println(s) // الفخ هنا
 );
 t.start();
 ```
@@ -191,23 +203,29 @@ t.start();
 - D) Runtime Exception
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: C**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Runnable Signature:**
+> الإجابة الصحيحة: C
 > 
-> ```java
-> void run();
-> ```
+> 🧠 تحليل السينيور:
 > 
-> ❌ `(String s) -> ...`  
-> ✔ `() -> ...`
+> الـ Constructor بتاع Thread مستني Runnable.
+> 
+> الـ Runnable ده Functional Interface فيه ميثود يتيمة: void run().
+> 
+> الميثود دي مبتاخدش باراميترز (no-args).
+> 
+> اللامبدا اللي أنت باعتها بتاخد String، وده ميمشيش مع التوقيع بتاع Runnable. الكومبايلر هيصرخ في وشك.
 
 ---
 
-## 🧪 Question 6: Execution Order — OS Scheduler
+### 🟢 Question 6: Execution Order — OS Scheduler
 
-```java
+**Topic:** Scheduling
+
+Java
+
+```
 new Thread(() -> System.out.print("T1 ")).start();
 new Thread(() -> System.out.print("T2 ")).start();
 System.out.print("Main ");
@@ -224,24 +242,30 @@ System.out.print("Main ");
 - D) None (all possible)
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: D**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Rule:**  
-> `.start()` = hand over control to **OS Scheduler**
+> الإجابة الصحيحة: D — None (all possible)
 > 
-> مفيش أي ترتيب مضمون بدون `join()` / sync.
+> 🧠 تحليل السينيور:
+> 
+> بمجرد ما ناديت .start()، أنت سلمت الدفة لـ OS Scheduler.
+> 
+> هو بيقرر مين يشتغل إمتى وبأي ترتيب بناءً على خوارزميات معقدة وحمل الجهاز.
+> 
+> الكود ده حرفياً سباق خيول (Race)، أي حصان ممكن يوصل الأول، وممكن الـ Main يخلص قبلهم كلهم.
 
 ---
 
-## 🧪 Question 7: `Thread` vs `Runnable` — Design Question
+### 🟢 Question 7: `Thread` vs `Runnable` — Design Question
 
-```java
+**Topic:** Design Principles
+
+Java
+
+```
 class Vehicle {}
 class Car extends Vehicle implements Runnable {
-    public void run() {
-        System.out.println("Vroom");
-    }
+    public void run() { System.out.println("Vroom"); }
 }
 ```
 
@@ -256,24 +280,30 @@ class Car extends Vehicle implements Runnable {
 - D) Thread is deprecated
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: B**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Architecture:**
+> الإجابة الصحيحة: B
 > 
-> - Java = single inheritance
->     
-> - Runnable = **Composition over Inheritance**
->     
+> 🧠 تحليل السينيور:
+> 
+> الجافا بتدعم Single Class Inheritance.
+> 
+> لو خليت Car extends Thread، ضيعت فرصتك إنك تورث من Vehicle.
+> 
+> استخدام implements Runnable بيخليك حر تورث من أي كلاس تاني (Composition over Inheritance). ده شغل Archtiect فاهم مش حافظ.
 
 ---
 
-## 🧪 Question 8: `Thread.sleep()` — Static Method Trap
+### 🟢 Question 8: `Thread.sleep()` — Static Method Trap
 
-```java
+**Topic:** Static Methods
+
+Java
+
+```
 Thread t = new Thread(() -> System.out.println("Run"));
 t.start();
-t.sleep(1000);
+t.sleep(1000); // الفخ هنا
 System.out.println("End");
 ```
 
@@ -288,26 +318,32 @@ System.out.println("End");
 - D) Compilation Error
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: B**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Important:**  
-> `sleep()` **static**
+> الإجابة الصحيحة: B — main
 > 
-> بتنيم **Current Thread**
+> 🧠 تحليل السينيور:
 > 
-> IDE Warning: calling static via instance ⚠️
+> خدعة كلاسيكية! Thread.sleep() دي Static Method.
+> 
+> حتى لو ناديتها عن طريق instance (t.sleep())، الجافا بتترجمها لـ Thread.sleep().
+> 
+> وهي بتنيم الـ Current Thread اللي السطر ده اتنفذ فيه (اللي هو هنا الـ main). الـ Thread t شغال ولا همه حاجة.
 
 ---
 
-## 🧪 Question 9: `synchronized` Block — Primitive Trap (✔️ مصححة)
+### 🟢 Question 9: `synchronized` Block — Primitive Trap
 
-```java
+**Topic:** Synchronization
+
+Java
+
+```
 public class Counter {
     private int count = 0;
 
     public void increment() {
-        synchronized (______) {
+        synchronized (______) { // الفراغ ده
             count++;
         }
     }
@@ -325,23 +361,27 @@ public class Counter {
 - D) `count`
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: D — `count`**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Rule:**  
-> `synchronized` لازم **Reference type**
+> الإجابة الصحيحة: D — count
 > 
-> ❌ primitives
+> 🧠 تحليل السينيور:
 > 
-> ```java
-> synchronized(count) // compile error
-> ```
+> الـ Lock في الجافا بيتحط على Object Header (Monitor).
+> 
+> الـ Primitives (زي int) معندهاش Object Header، وبالتالي مينفعش تستخدمها كـ Lock.
+> 
+> الكومبايلر هيرفض synchronized(count) فوراً.
 
 ---
 
-## 🧪 Question 10: Anonymous Inner Class Thread
+### 🟢 Question 10: Anonymous Inner Class Thread
 
-```java
+**Topic:** Syntax Variants
+
+Java
+
+```
 new Thread() {
     public void run() {
         System.out.println("A");
@@ -360,34 +400,12 @@ new Thread() {
 - D) Method Reference
     
 
-> [!success] 👀 الإجابة والتحليل  
-> **الإجابة: B**
+> [!SUCCESS]- اضغط هنا لرؤية الحل والتحليل
 > 
-> **🧠 Explanation:**
+> الإجابة الصحيحة: B
 > 
-> ```java
-> new Thread() { ... }
-> ```
+> 🧠 تحليل السينيور:
 > 
-> = anonymous subclass of `Thread`
+> الشكل ده new Thread() { ... } بيعمل كلاس "مجهول الهوية" (Anonymous Inner Class) بيورث (extends) من Thread وبيعمل Override للـ run.
 > 
-> Pre-Java-8 style
-
----
-
-> [!summary]  
-> ✔ منسق لـ **Obsidian**  
-> ✔ تصحيح خدعة `synchronized`  
-> ✔ Senior-level explanations  
-> ✔ جاهز Exam / Interview / Notes
-> 
-> لو حابب:
-> 
-> - 🧪 MCQ امتحان كامل
->     
-> - 📘 Threading Cheat Sheet
->     
-> - ⚠️ Deadlock & Race Patterns
->     
-> 
-> قولّي وانت أظبطهولك 💪
+> ده كان الاستايل القديم قبل ما ربنا يكرمنا بالـ Lamdbas في Java 8.

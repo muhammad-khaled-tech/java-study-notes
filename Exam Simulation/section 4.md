@@ -510,14 +510,6 @@ public class MapDuplicate {
 
 
 ---
-ولا يهمك يا بطل، ده العشم برضه! 😉
-
-أنا عدت صياغة الشرح كله بلهجة "السينيور" المصرية، عشان تفهم "الزتونة" والسبب العميق وراء كل إجابة، مش مجرد كلمتين ورد غطاهم.
-
-انسخ الكود ده عندك في **Obsidian**، واستمتع بالمذاكرة:
-
-
----
 
 ### 🟢 Q11: Mutable Key Trap in `HashMap`
 **Topic:** Collections (Hashing)
@@ -625,9 +617,9 @@ public class MapMerge {
 
 **Topic:** Streams
 
-Java
 
-```
+
+```Java
 import java.util.stream.Stream;
 
 public class IterateTest {
@@ -676,7 +668,7 @@ public class IterateTest {
 
 Java
 
-```
+```Java
 import java.util.HashSet;
 import java.util.ArrayList;
 

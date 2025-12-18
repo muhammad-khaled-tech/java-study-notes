@@ -384,7 +384,7 @@ class Outer {
 
 **(Source: Lesson 5 - Part 2)**
 
-```
+```java
 interface Action { void doIt(); }
 public class Test {
     public static void main(String[] args) {

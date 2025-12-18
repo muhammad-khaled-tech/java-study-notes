@@ -304,7 +304,7 @@ public class Test {
 
 **(Source: Lesson 5 - Part 2)**
 
-```
+```java
 class Outer {
     static class Nested {}
 }

@@ -183,9 +183,9 @@ public class Sleeper implements Runnable {
 
 **Topic:** Functional Interfaces
 
-Java
 
-```
+
+```Java
 Thread t = new Thread(
     (String s) -> System.out.println(s) // الفخ هنا
 );
@@ -223,9 +223,9 @@ t.start();
 
 **Topic:** Scheduling
 
-Java
 
-```
+
+```Java
 new Thread(() -> System.out.print("T1 ")).start();
 new Thread(() -> System.out.print("T2 ")).start();
 System.out.print("Main ");

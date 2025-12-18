@@ -8,7 +8,8 @@
     "All lectures/Stream API.md": "rtl",
     "All lectures/Java collections.md": "rtl",
     "Exam Simulation/Section 1.md": "rtl",
-    "All lectures/Threading.md": "rtl"
+    "All lectures/Threading.md": "rtl",
+    "Exam Simulation/section 4.md": "auto"
   },
   "defaultDirection": "auto",
   "rememberPerFile": true,

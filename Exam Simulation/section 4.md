@@ -764,7 +764,7 @@ public class CompSyntax {
 
 Java
 
-```
+```Java
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -816,7 +816,7 @@ public class RaceCond {
 
 Java
 
-```
+```Java
 boolean result = Stream.empty().allMatch(s -> false);
 System.out.println(result);
 ```
@@ -852,9 +852,9 @@ System.out.println(result);
 
 **Topic:** Optionals
 
-Java
 
-```
+
+```Java
 import java.util.Optional;
 
 public class OptionalTest {

@@ -370,7 +370,8 @@ class Outer {
 
 **Is this code valid?** 
 **A.** No, Inner cannot access private members of Outer. 
-**B.** Yes, compiles and runs fine. **C.** No, syntax `Outer.this.msg` is incorrect. 
+**B.** Yes, compiles and runs fine. 
+**C.** No, syntax `Outer.this.msg` is incorrect. 
 **D.** No, msg must be final.
 
 **الإجابة: B (Yes, compiles and runs fine)**

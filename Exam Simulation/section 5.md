@@ -52,9 +52,9 @@ public class Runner {
 
 **Topic:** Interfaces & Overriding
 
-Java
 
-```
+
+```Java
 public class MyTask implements Runnable {
     void run() { // الفخ هنا (Package-Private)
         System.out.println("Working...");

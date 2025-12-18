@@ -336,9 +336,9 @@ System.out.println("End");
 
 **Topic:** Synchronization
 
-Java
 
-```
+
+```Java
 public class Counter {
     private int count = 0;
 
@@ -381,7 +381,7 @@ public class Counter {
 
 Java
 
-```
+```Java
 new Thread() {
     public void run() {
         System.out.println("A");

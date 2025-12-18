@@ -516,13 +516,6 @@ public class MapDuplicate {
 
 انسخ الكود ده عندك في **Obsidian**، واستمتع بالمذاكرة:
 
----
-
-Markdown
-
-````
-# 🧪 Java OCP Tricky Questions (Set 2)
-**Tags:** #Java #OCP #Tricky #Collections #Streams
 
 ---
 
@@ -585,9 +578,9 @@ public class MapKey {
 
 **Topic:** Collections (Map API)
 
-Java
 
-```
+
+```Java
 import java.util.HashMap;
 import java.util.Map;
 

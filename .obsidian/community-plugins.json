@@ -12,5 +12,8 @@
   "copilot",
   "obsidian-linter",
   "obsidian-mind-map",
-  "templater-obsidian"
+  "templater-obsidian",
+  "vscode-editor",
+  "code-styler",
+  "execute-code"
 ]

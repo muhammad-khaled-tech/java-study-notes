@@ -1,5 +1,8 @@
 [
   "obsidian-languagetool-plugin",
   "obsidian-rtl",
-  "obsidian-git"
+  "obsidian-git",
+  "obsidian-excalidraw-plugin",
+  "obsidian-icon-folder",
+  "obsidian-style-settings"
 ]

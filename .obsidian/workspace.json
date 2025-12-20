@@ -20,8 +20,19 @@
               "icon": "lucide-file",
               "title": "Total set 5"
             }
+          },
+          {
+            "id": "e973d8fec256e8bd",
+            "type": "leaf",
+            "state": {
+              "type": "smart-release-notes-view",
+              "state": {},
+              "icon": "file-text",
+              "title": "Release Notes"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -174,14 +185,23 @@
               "icon": "git-pull-request",
               "title": "Source Control"
             }
+          },
+          {
+            "id": "6d980fd7e891c79b",
+            "type": "leaf",
+            "state": {
+              "type": "smart-connections-view",
+              "state": {},
+              "icon": "smart-connections",
+              "title": "Connections"
+            }
           }
         ],
-        "currentTab": 5
+        "currentTab": 6
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -192,11 +212,33 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "bases:Create new base": false,
-      "obsidian-git:Open Git source control": false
+      "obsidian-git:Open Git source control": false,
+      "obsidian-excalidraw-plugin:New drawing": false,
+      "omnisearch:Omnisearch": false,
+      "smart-connections:Smart Connections: Open connections view": false,
+      "smart-connections:Smart Lookup: Open lookup view": false,
+      "smart-connections:Smart Connections: Open random connection": false,
+      "obsidian-advanced-slides:Show Slide Preview": false,
+      "copilot:Open Copilot Chat": false
     }
   },
-  "active": "16b9fec0a8affcaf",
+  "active": "6d980fd7e891c79b",
   "lastOpenFiles": [
+    "copilot/copilot-custom-prompts/Rewrite as tweet thread.md",
+    "copilot/copilot-custom-prompts/Rewrite as tweet.md",
+    "copilot/copilot-custom-prompts/Remove URLs.md",
+    "copilot/copilot-custom-prompts/Generate glossary.md",
+    "copilot/copilot-custom-prompts/Generate table of contents.md",
+    "copilot/copilot-custom-prompts/Make longer.md",
+    "copilot/copilot-custom-prompts/Make shorter.md",
+    "copilot/copilot-custom-prompts/Emojify.md",
+    "copilot/copilot-custom-prompts/Explain like I am 5.md",
+    "copilot/copilot-custom-prompts/Simplify.md",
+    "copilot/copilot-custom-prompts/Summarize.md",
+    "copilot/copilot-custom-prompts/Translate to Chinese.md",
+    "copilot/copilot-custom-prompts/Fix grammar and spelling.md",
+    "copilot/copilot-custom-prompts",
+    "copilot",
     "Exam Simulation/Total set 3.md",
     "Exam Simulation/Total set 2.md",
     "Exam Simulation/Total set 1.md",
@@ -210,19 +252,6 @@
     "Exam Simulation/Total set 4.md",
     "Exam Simulation/Total set 5.md",
     "different explanations/حاجات متفرقة جات على بالي.md",
-    "different explanations/Wrapers.md",
-    "different explanations/var.md",
-    "different explanations/Inner Classes.md",
-    "different explanations/Functional interfaces.md",
-    "different explanations/Untitled 1.md",
-    "Exam Simulation/Section 1.md",
-    "Exam Simulation/Total set 4 1.md",
-    "All lectures/Threading.md",
-    "All lectures/Stream API.md",
-    "All lectures/The History and Evolution of Java.md",
-    "All lectures/Wrapper Classes & inner classes.md",
-    "All lectures/Exceptions.md",
-    "All lectures/Generics and Lambda Expressions and Method Reference.md",
     "Exam Simulation",
     "All lectures",
     "different explanations"
